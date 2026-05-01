@@ -9,10 +9,12 @@ We use the `.ai` folder to manage the development lifecycle:
 - **Tasks:** Tracked in `.ai/tasks/`.
 - **Plans:** Detailed implementation plans in `.ai/plans/`.
 
-## Strategic Mandates
-- **Secret Safety:** NEVER log, print, or commit secrets, API keys, or sensitive credentials. Rigorously protect `.env` files and `.github/token`.
-- **Git Integrity:** Follow Conventional Commits. Review diffs before staging.
-- **Platform Focus:** Android is the primary and default target. Other platforms are opt-in only.
+## Strategic Mandates (Enforced Skills)
+0.  **Workflow Validator:** Proactive audit as "Step 0" for any new task. Ensures a feature branch and an open MR/PR exist BEFORE writing code.
+1.  **Workflow Guard:** Strictly FORBIDDEN to commit directly to protected branches (`main`, `master`, `develop`). All work must happen in feature branches.
+2.  **Secret Safety:** Active scanning via `secret-detection`. NEVER commit secrets or API tokens. Rigorously protect `.env` files and `.github/token`.
+3.  **Git Integrity:** Active enforcement via `git-hygiene`. Commits must be feature-specific and follow Conventional Commits. Always verify `git status` and `git diff` before committing.
+4.  **Platform Focus:** Android is the primary and default target. Other platforms are opt-in only.
 
 ## Key Files & Directories
 - `.ai/`: AI workspace context.
