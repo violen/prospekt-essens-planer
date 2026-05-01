@@ -20,15 +20,14 @@ void main() {
 
   test('can insert and retrieve a recipe with ingredients', () async {
     final recipe = Recipe(
-      id: 0,
       name: 'Kartoffelauflauf',
       instructions: 'Backen...',
       isConvenience: false,
       rating: 5,
     );
     final ingredients = [
-      RecipeIngredient(id: 0, recipeId: 0, name: 'Kartoffeln', amount: 1, unit: 'kg'),
-      RecipeIngredient(id: 0, recipeId: 0, name: 'Sahne', amount: 200, unit: 'ml'),
+      RecipeIngredient(name: 'Kartoffeln', amount: 1, unit: 'kg'),
+      RecipeIngredient(name: 'Sahne', amount: 200, unit: 'ml'),
     ];
 
     final id = await repository.insertRecipe(recipe, ingredients);
