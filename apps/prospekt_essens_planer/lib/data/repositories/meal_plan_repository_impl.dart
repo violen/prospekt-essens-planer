@@ -30,7 +30,7 @@ class MealPlanRepositoryImpl implements MealPlanRepository {
 
   @override
   Future<void> updateMealPlan(MealPlan mealPlan) async {
-    final query = db.update(db.mealPlans)..where((t) => t.id.equals(mealPlan.id));
+    final query = db.update(db.mealPlans)..where((t) => t.id.equals(mealPlan.id!));
     await query.write(MealPlansCompanion(
       date: Value(mealPlan.date),
       mealType: Value(mealPlan.mealType),
