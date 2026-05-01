@@ -6,3 +6,11 @@ packages:
 command:
   bootstrap:
     usePubspecOverrides: true
+
+scripts:
+  analyze:
+    exec: flutter analyze
+    description: Run flutter analyze for all packages.
+  test:
+    exec: flutter test
+    description: Run flutter test for all packages.
