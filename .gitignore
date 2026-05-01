@@ -54,3 +54,7 @@ app.*.map.json
 
 .ai/
 .gemini/
+
+# Sample Data
+sample_data/
+
