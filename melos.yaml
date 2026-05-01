@@ -1,0 +1,45 @@
+name: prospekt_essens_planer
+packages:
+  - apps/*
+  - packages/*
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  get:
+    run: melos exec -- flutter pub get
+    description: Run 'flutter pub get' in all packages.
+
+  clean:
+    run: melos exec -- flutter clean
+    description: Run 'flutter clean' in all packages.
+
+  test:
+    run: melos run test:unit
+    description: Run all tests in the workspace.
+
+  test:unit:
+    run: melos exec --dir-exists="test" -- flutter test
+    description: Run unit tests in all packages.
+
+  analyze:
+    run: melos exec -- flutter analyze .
+    description: Run 'flutter analyze' in all packages.
+
+  format:
+    run: melos exec -- flutter format .
+    description: Format code in all packages.
+
+  fix:
+    run: melos run format && melos exec -- flutter fix --apply
+    description: Format and fix code in all packages.
+
+  build:
+    run: melos exec --depends-on="build_runner" -- dart run build_runner build --delete-conflicting-outputs
+    description: Run 'build_runner build' in packages that depend on it.
+
+  watch:
+    run: melos exec --depends-on="build_runner" -- dart run build_runner watch --delete-conflicting-outputs
+    description: Run 'build_runner watch' in packages that depend on it.
