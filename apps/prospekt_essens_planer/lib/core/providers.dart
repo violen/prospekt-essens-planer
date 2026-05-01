@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/local/database.dart';
 import '../data/repositories/brochure_repository_impl.dart';
+import '../data/repositories/composite_brochure_parser.dart';
 import '../data/repositories/meal_plan_repository_impl.dart';
+import '../data/repositories/ocr_brochure_parser.dart';
 import '../data/repositories/offer_repository_impl.dart';
 import '../data/repositories/pdf_brochure_parser.dart';
 import '../data/repositories/recipe_repository_impl.dart';
@@ -37,7 +39,20 @@ final mealPlanRepositoryProvider = Provider<MealPlanRepository>((ref) {
   return MealPlanRepositoryImpl(db);
 });
 
-final brochureParserProvider = Provider<BrochureParser>((ref) {
+final pdfBrochureParserProvider = Provider<PdfBrochureParser>((ref) {
   return PdfBrochureParser();
+});
+
+final ocrBrochureParserProvider = Provider<OcrBrochureParser>((ref) {
+  final parser = OcrBrochureParser();
+  ref.onDispose(() => parser.dispose());
+  return parser;
+});
+
+final brochureParserProvider = Provider<BrochureParser>((ref) {
+  return CompositeBrochureParser(
+    ref.watch(pdfBrochureParserProvider),
+    ref.watch(ocrBrochureParserProvider),
+  );
 });
 
