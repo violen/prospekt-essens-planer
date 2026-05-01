@@ -1,18 +1,19 @@
 # Phase 2 Tasks: Data Ingestion (Brochures & OCR)
 
 ## 1. PDF Parsing Integration
-- [ ] Research and add a Flutter-compatible PDF parsing package (e.g., `syncfusion_flutter_pdf` or `dart_pdf`).
-- [ ] Create `BrochureParser` interface in `domain/repositories`.
-- [ ] Implement `PdfBrochureParser` in `data/repositories`.
-- [ ] Add unit tests with a sample PDF from `sample_data`.
+- [x] Research and add a Flutter-compatible PDF parsing package (`pdf_text`).
+- [x] Create `BrochureParser` interface in `domain/repositories`.
+- [x] Implement `PdfBrochureParser` in `data/repositories` with improved regex and unit detection.
+- [x] Add unit tests for PDF extraction logic.
 
 ## 2. Image OCR Integration (ML Kit)
-- [ ] Add `google_mlkit_text_recognition` dependency.
-- [ ] Implement `OcrBrochureParser` in `data/repositories` for image processing.
+- [x] Add `google_mlkit_text_recognition` dependency.
+- [x] Implement `OcrBrochureParser` in `data/repositories` for image processing using shared extraction heuristics.
 - [ ] Create a service to handle camera/gallery input for brochure scans.
+- [x] Implement `CompositeBrochureParser` to switch between PDF and OCR based on file type.
 
 ## 3. Offer Extraction Logic
-- [ ] Develop Regex/NLP logic to extract product names and prices from raw text.
+- [x] Develop Regex logic to extract product names and prices from raw text.
 - [ ] Implement a "Review & Correct" UI flow (Presentation layer) to allow users to verify extracted offers.
 - [ ] Save extracted offers to the Drift database.
 
