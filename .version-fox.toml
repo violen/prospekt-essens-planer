@@ -1,0 +1,4 @@
+[tools]
+flutter = "3.41.5"
+dart = "3.11.3"
+nodejs = "24.14.0"

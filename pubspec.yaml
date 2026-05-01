@@ -1,0 +1,10 @@
+name: prospekt_essens_planer_root
+description: Root of the Prospekt Essens Planer Monorepo
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.11.3 <4.0.0'
+
+dev_dependencies:
+  melos: ^6.0.0
