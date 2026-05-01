@@ -16,6 +16,12 @@
 - [ ] Implement a "Review & Correct" UI flow (Presentation layer) to allow users to verify extracted offers.
 - [ ] Save extracted offers to the Drift database.
 
-## 4. Testing & Verification
+## 4. Localization & Multi-language Support
+- [ ] Add `flutter_localizations` dependency to `pubspec.yaml`.
+- [ ] Setup `l10n.yaml` and initialize ARB files for German (`app_de.arb`).
+- [ ] Implement a basic localization delegate and verify it with a "Welcome" string.
+- [ ] (Future) Prepare for English support by ensuring all UI strings are localized.
+
+## 5. Testing & Verification
 - [ ] Integration tests for the full ingestion pipeline: `File -> Parser -> Entities -> Database`.
 - [ ] Verify extraction accuracy across different brochure formats.
