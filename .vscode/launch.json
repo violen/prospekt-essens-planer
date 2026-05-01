@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Prospekt Essens Planer (Debug)",
+      "request": "launch",
+      "type": "dart",
+      "program": "apps/prospekt_essens_planer/lib/main.dart"
+    },
+    {
+      "name": "Prospekt Essens Planer (Release)",
+      "request": "launch",
+      "type": "dart",
+      "program": "apps/prospekt_essens_planer/lib/main.dart",
+      "flutterMode": "release"
+    }
+  ]
+}
