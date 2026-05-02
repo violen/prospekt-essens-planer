@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../controllers/weekly_planner_controller.dart';
 
 class WeeklyPlannerPage extends ConsumerWidget {
@@ -10,12 +11,13 @@ class WeeklyPlannerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(weeklyPlannerControllerProvider);
     final controller = ref.read(weeklyPlannerControllerProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wochenplaner'),
+        title: Text(l10n.weeklyPlanner),
         actions: [
           IconButton(
             icon: const Icon(Icons.chevron_left),
@@ -23,7 +25,7 @@ class WeeklyPlannerPage extends ConsumerWidget {
           ),
           Center(
             child: Text(
-              'KW ${DateFormat('w').format(state.selectedWeekStart)}',
+              l10n.kwPrefix(DateFormat('w').format(state.selectedWeekStart)),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -39,7 +41,7 @@ class WeeklyPlannerPage extends ConsumerWidget {
               itemCount: 7,
               itemBuilder: (context, index) {
                 final date = state.selectedWeekStart.add(Duration(days: index));
-                return _DaySection(date: date);
+                return _DaySection(date: date, l10n: l10n);
               },
             ),
     );
@@ -48,8 +50,9 @@ class WeeklyPlannerPage extends ConsumerWidget {
 
 class _DaySection extends StatelessWidget {
   final DateTime date;
+  final AppLocalizations l10n;
 
-  const _DaySection({required this.date});
+  const _DaySection({required this.date, required this.l10n});
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +69,8 @@ class _DaySection extends StatelessWidget {
                 ),
           ),
         ),
-        _MealSlot(date: date, mealType: 'lunch', label: 'Mittagessen'),
-        _MealSlot(date: date, mealType: 'dinner', label: 'Abendessen'),
+        _MealSlot(date: date, mealType: 'lunch', label: l10n.lunch, l10n: l10n),
+        _MealSlot(date: date, mealType: 'dinner', label: l10n.dinner, l10n: l10n),
         const Divider(),
       ],
     );
@@ -78,11 +81,13 @@ class _MealSlot extends ConsumerWidget {
   final DateTime date;
   final String mealType;
   final String label;
+  final AppLocalizations l10n;
 
   const _MealSlot({
     required this.date,
     required this.mealType,
     required this.label,
+    required this.l10n,
   });
 
   @override
@@ -94,19 +99,19 @@ class _MealSlot extends ConsumerWidget {
       leading: const Icon(Icons.restaurant_outlined),
       title: Text(label),
       subtitle: plan != null 
-          ? _MealPlanTitle(recipeId: plan.recipeId, customName: plan.customEntryName)
-          : const Text('Noch nichts geplant', style: TextStyle(fontStyle: FontStyle.italic)),
+          ? _MealPlanTitle(recipeId: plan.recipeId, customName: plan.customEntryName, l10n: l10n)
+          : Text(l10n.nothingPlanned, style: const TextStyle(fontStyle: FontStyle.italic)),
       trailing: plan != null 
           ? IconButton(
               icon: const Icon(Icons.close),
               onPressed: () => ref.read(weeklyPlannerControllerProvider.notifier).removePlan(plan.id!),
             )
           : const Icon(Icons.add),
-      onTap: () => _showRecipePicker(context, ref, date, mealType),
+      onTap: () => _showRecipePicker(context, ref, date, mealType, l10n),
     );
   }
 
-  void _showRecipePicker(BuildContext context, WidgetRef ref, DateTime date, String mealType) async {
+  void _showRecipePicker(BuildContext context, WidgetRef ref, DateTime date, String mealType, AppLocalizations l10n) async {
     final recipes = await ref.read(recipeRepositoryProvider).getAllRecipes();
     
     if (context.mounted) {
@@ -133,19 +138,20 @@ class _MealSlot extends ConsumerWidget {
 class _MealPlanTitle extends ConsumerWidget {
   final int? recipeId;
   final String? customName;
+  final AppLocalizations l10n;
 
-  const _MealPlanTitle({this.recipeId, this.customName});
+  const _MealPlanTitle({this.recipeId, this.customName, required this.l10n});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (customName != null) return Text(customName!);
-    if (recipeId == null) return const Text('Unbekannt');
+    if (recipeId == null) return Text(l10n.unknown);
 
     return FutureBuilder<Recipe>(
       future: ref.read(recipeRepositoryProvider).getRecipeById(recipeId!),
       builder: (context, snapshot) {
         if (snapshot.hasData) return Text(snapshot.data!.name, style: const TextStyle(fontWeight: FontWeight.bold));
-        return const Text('Lade Rezept...');
+        return Text(l10n.loadingRecipe);
       },
     );
   }

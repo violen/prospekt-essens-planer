@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:pdfrx/pdfrx.dart';
 import 'l10n/app_localizations.dart';
 import 'core/services/notification_service.dart';
 import 'features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
@@ -10,7 +9,6 @@ import 'features/meal_planner/presentation/pages/weekly_planner_page.dart';
 import 'features/meal_planner/presentation/pages/recipe_management_page.dart';
 
 void main() {
-  pdfrxFlutterInitialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 

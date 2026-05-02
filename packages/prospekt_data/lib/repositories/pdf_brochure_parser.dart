@@ -1,26 +1,21 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
-import 'package:pdfrx/pdfrx.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 
 class PdfBrochureParser implements BrochureParser {
+  static const _channel = MethodChannel('com.violen.prospekt_essens_planer/pdf_extractor');
+
   @override
   Future<List<Offer>> parse(File file, int brochureId) async {
     try {
-      final doc = await PdfDocument.openFile(file.path);
-      final StringBuffer fullText = StringBuffer();
+      final String? text = await _channel.invokeMethod<String>('extractText', {
+        'filePath': file.path,
+      });
       
-      for (final page in doc.pages) {
-        final pageText = await page.loadText();
-        final text = pageText?.fullText;
-        if (text != null) {
-          fullText.writeln(text);
-        }
-      }
+      if (text == null || text.isEmpty) return [];
       
-      await doc.dispose();
-      
-      return extractOffersFromRawText(fullText.toString(), brochureId);
+      return extractOffersFromRawText(text, brochureId);
     } catch (e) {
       // In a real app, we'd log this and throw a custom exception
       return [];

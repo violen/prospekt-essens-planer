@@ -261,6 +261,144 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Datei wählen'**
   String get selectFileAction;
+
+  /// No description provided for @manageRecipes.
+  ///
+  /// In de, this message translates to:
+  /// **'Rezepte Verwalten'**
+  String get manageRecipes;
+
+  /// No description provided for @noRecipesTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Keine Rezepte'**
+  String get noRecipesTitle;
+
+  /// No description provided for @noRecipesMessage.
+  ///
+  /// In de, this message translates to:
+  /// **'Füge deine ersten Rezepte hinzu, um den Planer zu nutzen.'**
+  String get noRecipesMessage;
+
+  /// No description provided for @createRecipe.
+  ///
+  /// In de, this message translates to:
+  /// **'Rezept erstellen'**
+  String get createRecipe;
+
+  /// No description provided for @newRecipe.
+  ///
+  /// In de, this message translates to:
+  /// **'Neues Rezept'**
+  String get newRecipe;
+
+  /// No description provided for @dishName.
+  ///
+  /// In de, this message translates to:
+  /// **'Name des Gerichts'**
+  String get dishName;
+
+  /// No description provided for @convenienceProduct.
+  ///
+  /// In de, this message translates to:
+  /// **'Convenience (Knorr/Maggi)'**
+  String get convenienceProduct;
+
+  /// No description provided for @freshCooking.
+  ///
+  /// In de, this message translates to:
+  /// **'Frisch kochen'**
+  String get freshCooking;
+
+  /// No description provided for @create.
+  ///
+  /// In de, this message translates to:
+  /// **'Erstellen'**
+  String get create;
+
+  /// No description provided for @planer.
+  ///
+  /// In de, this message translates to:
+  /// **'Planer'**
+  String get planer;
+
+  /// No description provided for @suggestions.
+  ///
+  /// In de, this message translates to:
+  /// **'Vorschläge'**
+  String get suggestions;
+
+  /// No description provided for @recipes.
+  ///
+  /// In de, this message translates to:
+  /// **'Rezepte'**
+  String get recipes;
+
+  /// No description provided for @import.
+  ///
+  /// In de, this message translates to:
+  /// **'Import'**
+  String get import;
+
+  /// No description provided for @weeklyPlanner.
+  ///
+  /// In de, this message translates to:
+  /// **'Wochenplaner'**
+  String get weeklyPlanner;
+
+  /// No description provided for @kwPrefix.
+  ///
+  /// In de, this message translates to:
+  /// **'KW {week}'**
+  String kwPrefix(String week);
+
+  /// No description provided for @lunch.
+  ///
+  /// In de, this message translates to:
+  /// **'Mittagessen'**
+  String get lunch;
+
+  /// No description provided for @dinner.
+  ///
+  /// In de, this message translates to:
+  /// **'Abendessen'**
+  String get dinner;
+
+  /// No description provided for @nothingPlanned.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch nichts geplant'**
+  String get nothingPlanned;
+
+  /// No description provided for @loadingRecipe.
+  ///
+  /// In de, this message translates to:
+  /// **'Lade Rezept...'**
+  String get loadingRecipe;
+
+  /// No description provided for @unknown.
+  ///
+  /// In de, this message translates to:
+  /// **'Unbekannt'**
+  String get unknown;
+
+  /// No description provided for @scheduleMeal.
+  ///
+  /// In de, this message translates to:
+  /// **'{recipe} einplanen'**
+  String scheduleMeal(String recipe);
+
+  /// No description provided for @schedule.
+  ///
+  /// In de, this message translates to:
+  /// **'Einplanen'**
+  String get schedule;
+
+  /// No description provided for @mealTimeSelection.
+  ///
+  /// In de, this message translates to:
+  /// **'Mittag- oder Abendessen'**
+  String get mealTimeSelection;
 }
 
 class _AppLocalizationsDelegate

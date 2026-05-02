@@ -46,6 +46,18 @@ class MealPlannerController extends StateNotifier<MealPlannerState> {
         summaries.add(summary);
       }
 
+      // 3.1. Match Fix-products (Convenience Library)
+      for (final fixProduct in FixProductLibrary.products) {
+        final virtualRecipe = fixProduct.toRecipe();
+        final virtualIngredients = fixProduct.toIngredients(-1); // Dummy ID
+        final summary = matchingService.matchRecipe(virtualRecipe, virtualIngredients, allOffers);
+        
+        // Only suggest if at least one ingredient is on offer or if user has many ingredients already
+        if (summary.matchRate > 0) {
+          summaries.add(summary);
+        }
+      }
+
       // 4. Rank by preferences
       final ranked = scoringService.rankRecipes(summaries);
 

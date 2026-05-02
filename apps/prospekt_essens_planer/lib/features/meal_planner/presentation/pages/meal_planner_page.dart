@@ -81,9 +81,9 @@ class MealPlannerPage extends ConsumerWidget {
                       children: [
                         const Text('Zutaten & Angebote:', style: TextStyle(fontWeight: FontWeight.bold)),
                         FilledButton.icon(
-                          onPressed: () => _showPlanAssignmentDialog(context, ref, summary.recipe),
+                          onPressed: () => _showPlanAssignmentDialog(context, ref, summary.recipe, l10n),
                           icon: const Icon(Icons.calendar_month),
-                          label: const Text('Einplanen'),
+                          label: Text(l10n.schedule),
                         ),
                       ],
                     ),
@@ -112,14 +112,14 @@ class MealPlannerPage extends ConsumerWidget {
     );
   }
 
-  void _showPlanAssignmentDialog(BuildContext context, WidgetRef ref, Recipe recipe) {
+  void _showPlanAssignmentDialog(BuildContext context, WidgetRef ref, Recipe recipe, AppLocalizations l10n) {
     final now = DateTime.now();
     final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
     
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('${recipe.name} einplanen'),
+        title: Text(l10n.scheduleMeal(recipe.name)),
         content: SizedBox(
           width: double.maxFinite,
           child: ListView.builder(
@@ -131,9 +131,9 @@ class MealPlannerPage extends ConsumerWidget {
               
               return ListTile(
                 title: Text(dateStr),
-                subtitle: const Text('Mittag- oder Abendessen'),
+                subtitle: Text(l10n.mealTimeSelection),
                 onTap: () {
-                  _showMealTypePicker(context, ref, date, recipe);
+                  _showMealTypePicker(context, ref, date, recipe, l10n);
                 },
               );
             },
@@ -143,7 +143,7 @@ class MealPlannerPage extends ConsumerWidget {
     );
   }
 
-  void _showMealTypePicker(BuildContext context, WidgetRef ref, DateTime date, Recipe recipe) {
+  void _showMealTypePicker(BuildContext context, WidgetRef ref, DateTime date, Recipe recipe, AppLocalizations l10n) {
     showModalBottomSheet(
       context: context,
       builder: (context) => Column(
@@ -151,7 +151,7 @@ class MealPlannerPage extends ConsumerWidget {
         children: [
           ListTile(
             leading: const Icon(Icons.wb_sunny_outlined),
-            title: const Text('Mittagessen'),
+            title: Text(l10n.lunch),
             onTap: () {
               ref.read(weeklyPlannerControllerProvider.notifier).assignRecipe(date, 'lunch', recipe);
               Navigator.pop(context); // Close sheet
@@ -160,7 +160,7 @@ class MealPlannerPage extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.nightlight_outlined),
-            title: const Text('Abendessen'),
+            title: Text(l10n.dinner),
             onTap: () {
               ref.read(weeklyPlannerControllerProvider.notifier).assignRecipe(date, 'dinner', recipe);
               Navigator.pop(context); // Close sheet
