@@ -61,5 +61,42 @@
   "noRecommendationsTitle": "Noch keine Empfehlungen",
   "noRecommendationsMessage": "Importiere ein Prospekt oder erstelle Rezepte, um personalisierte Essensvorschläge zu erhalten.",
   "readyToImportTitle": "Bereit zum Import",
-  "selectFileAction": "Datei wählen"
+  "selectFileAction": "Datei wählen",
+  "manageRecipes": "Rezepte Verwalten",
+  "noRecipesTitle": "Keine Rezepte",
+  "noRecipesMessage": "Füge deine ersten Rezepte hinzu, um den Planer zu nutzen.",
+  "createRecipe": "Rezept erstellen",
+  "newRecipe": "Neues Rezept",
+  "dishName": "Name des Gerichts",
+  "convenienceProduct": "Convenience (Knorr/Maggi)",
+  "freshCooking": "Frisch kochen",
+  "create": "Erstellen",
+  "planer": "Planer",
+  "suggestions": "Vorschläge",
+  "recipes": "Rezepte",
+  "import": "Import",
+  "weeklyPlanner": "Wochenplaner",
+  "kwPrefix": "KW {week}",
+  "@kwPrefix": {
+    "placeholders": {
+      "week": {
+        "type": "String"
+      }
+    }
+  },
+  "lunch": "Mittagessen",
+  "dinner": "Abendessen",
+  "nothingPlanned": "Noch nichts geplant",
+  "loadingRecipe": "Lade Rezept...",
+  "unknown": "Unbekannt",
+  "scheduleMeal": "{recipe} einplanen",
+  "@scheduleMeal": {
+    "placeholders": {
+      "recipe": {
+        "type": "String"
+      }
+    }
+  },
+  "schedule": "Einplanen",
+  "mealTimeSelection": "Mittag- oder Abendessen"
 }

@@ -1,12 +1,25 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 
 class PdfBrochureParser implements BrochureParser {
+  static const _channel = MethodChannel('com.violen.prospekt_essens_planer/pdf_extractor');
+
   @override
   Future<List<Offer>> parse(File file, int brochureId) async {
-    // TODO: Re-implement PDF text extraction with a modern library (e.g. syncfusion or pdfx)
-    return [];
+    try {
+      final String? text = await _channel.invokeMethod<String>('extractText', {
+        'filePath': file.path,
+      });
+      
+      if (text == null || text.isEmpty) return [];
+      
+      return extractOffersFromRawText(text, brochureId);
+    } catch (e) {
+      // In a real app, we'd log this and throw a custom exception
+      return [];
+    }
   }
 
   @visibleForTesting
@@ -20,9 +33,7 @@ class PdfBrochureParser implements BrochureParser {
       caseSensitive: false,
     );
 
-    // Regex for common units: kg, g, l, ml, St., Stück, Dose, Pck., Packung
-    // Uses word boundaries \b to avoid matching within words (e.g., 'g' in 'Gurken').
-    // Reordered to match longer terms first (e.g., 'Stück' before 'St.').
+    // Regex for common units: kg, g, l, ml, Stück, St., Dose, Packung, Pck.
     final RegExp unitRegex = RegExp(
       r'(\b\d*\s*(?:kg|g|l|ml|Stück|St\.?|Dose|Packung|Pck\.?)\b)',
       caseSensitive: false,
@@ -41,24 +52,18 @@ class PdfBrochureParser implements BrochureParser {
         final double price = double.tryParse(priceString) ?? 0.0;
         
         if (price > 0) {
-          // Heuristic: The product name is often in the same line before the price, 
-          // or in the line immediately above.
           String productName = line.substring(0, match.start).trim();
           String? unit;
 
-          // Check for unit in the current line
           final unitMatch = unitRegex.firstMatch(line);
           if (unitMatch != null) {
             unit = unitMatch.group(1)?.trim();
-            // Remove unit from product name if it was caught there
             productName = productName.replaceFirst(unitMatch.group(1)!, '').trim();
           }
           
           if ((productName.isEmpty || productName.length < 3) && i > 0) {
-            // Try previous line for product name
             productName = lines[i - 1].trim();
             
-            // Check for unit in previous line if not found yet
             if (unit == null) {
               final prevUnitMatch = unitRegex.firstMatch(productName);
               if (prevUnitMatch != null) {
@@ -72,7 +77,6 @@ class PdfBrochureParser implements BrochureParser {
             productName = "Unbekanntes Produkt";
           }
 
-          // Clean up product name from dangling chars
           productName = productName.replaceAll(RegExp(r'^[^\w\d]+|[^\w\d]+$'), '').trim();
 
           offers.add(Offer(

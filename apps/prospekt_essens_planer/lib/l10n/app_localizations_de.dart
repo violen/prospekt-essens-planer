@@ -101,4 +101,78 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get selectFileAction => 'Datei wählen';
+
+  @override
+  String get manageRecipes => 'Rezepte Verwalten';
+
+  @override
+  String get noRecipesTitle => 'Keine Rezepte';
+
+  @override
+  String get noRecipesMessage =>
+      'Füge deine ersten Rezepte hinzu, um den Planer zu nutzen.';
+
+  @override
+  String get createRecipe => 'Rezept erstellen';
+
+  @override
+  String get newRecipe => 'Neues Rezept';
+
+  @override
+  String get dishName => 'Name des Gerichts';
+
+  @override
+  String get convenienceProduct => 'Convenience (Knorr/Maggi)';
+
+  @override
+  String get freshCooking => 'Frisch kochen';
+
+  @override
+  String get create => 'Erstellen';
+
+  @override
+  String get planer => 'Planer';
+
+  @override
+  String get suggestions => 'Vorschläge';
+
+  @override
+  String get recipes => 'Rezepte';
+
+  @override
+  String get import => 'Import';
+
+  @override
+  String get weeklyPlanner => 'Wochenplaner';
+
+  @override
+  String kwPrefix(String week) {
+    return 'KW $week';
+  }
+
+  @override
+  String get lunch => 'Mittagessen';
+
+  @override
+  String get dinner => 'Abendessen';
+
+  @override
+  String get nothingPlanned => 'Noch nichts geplant';
+
+  @override
+  String get loadingRecipe => 'Lade Rezept...';
+
+  @override
+  String get unknown => 'Unbekannt';
+
+  @override
+  String scheduleMeal(String recipe) {
+    return '$recipe einplanen';
+  }
+
+  @override
+  String get schedule => 'Einplanen';
+
+  @override
+  String get mealTimeSelection => 'Mittag- oder Abendessen';
 }

@@ -1,0 +1,25 @@
+appId: com.violen.prospekt_essens_planer.prospekt_essens_planer
+---
+- launchApp
+- assertVisible: "Wochenplaner"
+
+# Test Navigation
+- tapOn: "Vorschl.*"
+- assertVisible: "Prospekt Essens Planer"
+- tapOn: "Rezepte.*"
+- assertVisible: "Rezepte Verwalten"
+- tapOn: "Import.*"
+- assertVisible: "Prospekt Importieren"
+
+# Test Recipe Creation
+- tapOn: "Rezepte.*"
+- tapOn: "Rezept erstellen" # Using tooltip/label
+- inputText: "Selbstgemachte Pizza"
+- tapOn: "Erstellen"
+- assertVisible: "Selbstgemachte Pizza"
+
+# Test Fix-Product Recognition
+- tapOn: "Vorschl.*"
+# Assuming some mock data or earlier import happened
+# This checks if the dynamic brand prefix is present
+- assertVisible: ".*Fix: .*"

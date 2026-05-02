@@ -1,0 +1,16 @@
+appId: com.violen.prospekt_essens_planer.prospekt_essens_planer
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Wochenplaner"
+
+- tapOn: "Vorschl.*"
+- takeScreenshot: "maestro/screenshots/error_investigation_suggestions"
+- extendedWaitUntil:
+    visible: ".*"
+    timeout: 5000
+- assertVisible: "Prospekt Essens Planer"
+
+- tapOn: "Rezepte.*"
+- takeScreenshot: "maestro/screenshots/error_investigation_recipes"
+- assertVisible: "Rezepte Verwalten"

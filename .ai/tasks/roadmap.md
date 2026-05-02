@@ -2,8 +2,21 @@
 
 This is the consolidated source of truth for current development and future enhancements.
 
-## ✅ Project Status: MVP Reached
-All initial development phases (1-6) have been successfully completed and merged into the main branch. The app is functional on Android and ready for use.
+## 🟢 Current Phase: Phase 6 - Final Polish & Adaptive UX (Reopened)
+**Goal:** Complete the final functional requirements and verification.
+
+### 1. Weekly Planner Refinement
+- [x] Implement a real "Weekly Schedule" view (assigning recipes to specific days).
+- [x] Add navigation between weeks.
+- [ ] Implement Drag-and-Drop for planning meals (Optional Refinement).
+
+### 2. Modern PDF Engine
+- [ ] Research and integrate a modern PDF parsing library (replacing `pdf_text`).
+- [ ] Re-enable PDF-based offer extraction.
+
+### 3. Verification & BDD
+- [ ] Define BDD scenarios for the "Brochure to Plan" journey.
+- [ ] Implement BDD tests using Flutter's integration test framework or Maestro.
 
 ---
 
@@ -13,23 +26,19 @@ All initial development phases (1-6) have been successfully completed and merged
 - **Phase 3:** Monorepo Refactoring (merged)
 - **Phase 4:** Smart Planning Engine (merged)
 - **Phase 5:** UX, Feedback & Accessibility (merged)
-- **Phase 6:** Final Polish & Adaptive UX (merged)
 
 ---
 
 ## 🟡 Future Enhancements & Backlog
-These items were identified during reviews and development and are deferred for future iterations.
-
 ### Data Ingestion & OCR
-- [ ] **Modern PDF Engine:** Re-implement PDF text extraction using a modern library (e.g., `syncfusion_flutter_pdf`) to replace the removed `pdf_text`.
 - [ ] **Live Video Scanning:** Implement a camera preview with real-time OCR overlay.
-- [ ] **OCR Normalization:** Remove spaces/artifacts from recognized prices to increase accuracy.
+- [ ] **OCR Normalization:** Remove spaces/artifacts from recognized prices.
 
 ### Smart Planning Engine & Performance
-- [ ] **Variable Standard Prices:** Add support for ingredient-specific standard prices.
-- [ ] **Isolate-based Matching:** Offload heavy matching logic to a background Isolate.
-- [ ] **State-based Title Loading:** Integrate recipe names directly into the `WeeklyPlannerState` to avoid `FutureBuilder` flickering.
+- [ ] **Variable Standard Prices:** Support for ingredient-specific standard prices.
+- [ ] **Isolate-based Matching:** Offload heavy logic to a background Isolate.
+- [ ] **State-based Title Loading:** Integrate recipe names directly into the state.
 
 ### Infrastructure & Core
-- [ ] **English Localization:** Add `app_en.arb` for full multi-language support.
-- [ ] **Custom Exceptions:** Wrap database errors in custom Domain failures.
+- [ ] **English Localization:** Full multi-language support.
+- [ ] **Custom Exceptions:** Wrap database errors.

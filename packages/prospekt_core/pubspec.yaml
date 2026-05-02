@@ -1,6 +1,6 @@
 name: prospekt_core
 description: Core domain entities and repository interfaces for Prospekt Essens Planer.
-version: 0.0.1
+version: 1.0.0
 publish_to: none
 
 environment:
@@ -10,8 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  meta: ^1.11.0
-  string_similarity: ^2.2.0
+  meta: ^1.17.0
+  string_similarity: ^2.0.0
 
 dev_dependencies:
   flutter_test:

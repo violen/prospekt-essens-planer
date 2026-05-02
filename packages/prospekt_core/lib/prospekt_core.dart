@@ -1,6 +1,7 @@
 library prospekt_core;
 
 export 'entities/brochure.dart';
+export 'entities/fix_product.dart';
 export 'entities/meal_plan.dart';
 export 'entities/offer.dart';
 export 'entities/recipe.dart';
