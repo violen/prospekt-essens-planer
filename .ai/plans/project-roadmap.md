@@ -27,14 +27,18 @@ To build a localized, on-device Flutter application for Android that automates w
 4.  **TDD:** Write unit tests for the repositories and complex SQL queries (e.g., finding recipes where >50% of ingredients are on offer).
 
 ## Phase 2: Data Ingestion (Brochures & OCR)
-**Goal:** Enable the app to read and understand supermarket offers.
+**Goal:** Enable the app to read and understand supermarket offers. (Current Progress: Completed, awaiting PR review).
 
-1.  **PDF Parsing:** Integrate a native or pure-Dart PDF parser to extract text and basic structure from digital brochures.
-2.  **Image/Scan OCR:** Integrate Google ML Kit (On-Device Text Recognition) to process photographs of physical brochures.
-3.  **Offer Extraction Logic:** Build local algorithms (Regex/NLP) to identify product names, prices, and discounts from the raw text and map them to the `Offer` database entities.
-4.  **Testing:** Provide sample PDFs and images in the `test/assets/` directory to verify extraction accuracy.
+## Phase 3: Monorepo Refactoring (Architecture Alignment)
+**Goal:** Properly leverage the Melos monorepo structure by moving shared logic out of the main app.
 
-## Phase 3: The Smart Planning Engine
+1.  **Package Creation:**
+    *   Create `packages/prospekt_core` for domain entities and base repository interfaces.
+    *   Create `packages/prospekt_data` for Drift database implementation and parser logic.
+2.  **Dependency Decoupling:** Update the main app to depend on these local packages via Melos.
+3.  **Verification:** Ensure all tests pass across all packages and the main app after the move.
+
+## Phase 4: The Smart Planning Engine
 **Goal:** The core business logic that connects offers to meals.
 
 1.  **Recipe Matching:** Implement the algorithm to suggest recipes based on active `Offers`.

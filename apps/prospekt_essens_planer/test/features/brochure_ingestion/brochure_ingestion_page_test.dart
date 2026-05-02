@@ -1,10 +1,7 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:prospekt_essens_planer/core/providers.dart';
-import 'package:prospekt_essens_planer/domain/entities/offer.dart';
 import 'package:prospekt_essens_planer/features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:prospekt_essens_planer/l10n/app_localizations.dart';
@@ -23,15 +20,15 @@ void main() {
       overrides: [
         brochureParserProvider.overrideWithValue(mockParser),
       ],
-      child: MaterialApp(
-        localizationsDelegates: const [
+      child: const MaterialApp(
+        localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [Locale('de')],
-        home: const BrochureIngestionPage(),
+        supportedLocales: [Locale('de')],
+        home: BrochureIngestionPage(),
       ),
     );
   }
@@ -49,10 +46,6 @@ void main() {
     // Note: We are not testing the actual FilePicker here, 
     // but the UI's reaction to state changes.
     // To test this properly, we'd need to trigger the controller manually.
-    
-    final mockOffers = [
-      Offer(id: 1, brochureId: 0, productName: 'Test Apple', price: 0.99),
-    ];
     
     // We can't easily trigger pickAndParseFile in a widget test without 
     // mocking the FilePicker or using a custom controller.
