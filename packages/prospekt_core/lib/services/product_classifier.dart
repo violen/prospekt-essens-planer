@@ -97,7 +97,8 @@ class ProductClassifier {
 
     // Check unit (e.g., Waschladungen)
     if (unit != null) {
-      if (unit.contains('wl') || unit.contains('waschladungen') || unit.contains('blatt')) {
+      final lowerUnit = unit.toLowerCase();
+      if (_nonFoodUnits.any((u) => lowerUnit.contains(u))) {
         return true;
       }
     }
