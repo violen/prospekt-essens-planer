@@ -60,8 +60,6 @@ class IngestionController extends StateNotifier<IngestionState> {
     final parser = _ref.read(brochureParserProvider);
     final offers = await parser.parse(file, 0);
 
-    print('DEBUG: Controller received ${offers.length} offers from parser.');
-
     state = state.copyWith(
       status: IngestionStatus.success,
       extractedOffers: offers,

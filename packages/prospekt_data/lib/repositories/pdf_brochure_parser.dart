@@ -16,12 +16,6 @@ class PdfBrochureParser implements BrochureParser {
       
       if (text == null || text.isEmpty) return [];
 
-      // DEBUG LOG for Analysis (First 50 lines)
-      print('--- RAW PDF TEXT START (First 50 lines) ---');
-      final previewLines = text.split('\n').take(50).join('\n');
-      print(previewLines);
-      print('--- RAW PDF TEXT END ---');
-      
       return extractOffersFromRawText(text, brochureId);
     } catch (e) {
       // In a real app, we'd log this and throw a custom exception
