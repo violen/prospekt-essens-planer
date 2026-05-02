@@ -1,0 +1,34 @@
+{
+  "@@locale": "de",
+  "appTitle": "Prospekt Essens Planer",
+  "@appTitle": {
+    "description": "Der Titel der Anwendung"
+  },
+  "importBrochure": "Prospekt Importieren",
+  "@importBrochure": {
+    "description": "Titel der Import-Seite"
+  },
+  "selectFile": "Datei auswählen (PDF/Bild)",
+  "offersFound": "{count} Angebote gefunden",
+  "@offersFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "saveOffers": "Angebote Speichern",
+  "saveBrochure": "Prospekt speichern",
+  "brochureName": "Name des Prospekts (z.B. Kaufland KW 18)",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "noFileSelected": "Wähle ein Prospekt aus, um Angebote zu extrahieren.",
+  "errorPrefix": "Fehler: {message}",
+  "@errorPrefix": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  }
+}
