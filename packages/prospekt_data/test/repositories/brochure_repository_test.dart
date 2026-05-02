@@ -2,7 +2,6 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:prospekt_data/prospekt_data.dart';
-import 'package:prospekt_core/prospekt_core.dart';
 
 void main() {
   late AppDatabase database;

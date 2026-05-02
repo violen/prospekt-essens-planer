@@ -82,7 +82,7 @@ class IngestionController extends StateNotifier<IngestionState> {
 
       // 2. Save all offers associated with this brochure
       for (final offer in state.extractedOffers) {
-        await offerRepo.insertOffer(offer.copyWith(brochureId: brochureId!));
+        await offerRepo.insertOffer(offer.copyWith(brochureId: brochureId));
       }
 
       state = state.copyWith(status: IngestionStatus.success, extractedOffers: []);

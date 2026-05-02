@@ -31,7 +31,7 @@ void main() {
 
     final id = await repository.insertRecipe(recipe, ingredients);
     final retrievedRecipe = await repository.getRecipeById(id);
-    final retrievedIngredients = await repository.getIngredientsForRecipe(id!);
+    final retrievedIngredients = await repository.getIngredientsForRecipe(id);
 
     expect(retrievedRecipe.name, 'Kartoffelauflauf');
     expect(retrievedIngredients.length, 2);
