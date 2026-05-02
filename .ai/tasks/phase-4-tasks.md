@@ -21,3 +21,7 @@
 ## 5. Testing & Verification
 - [x] Unit tests for `MatchingService` and `ScoringService`.
 - [x] Static analysis and workspace-wide test verification.
+
+## 6. Future Enhancements & Optimization (Review Feedback)
+- [ ] (Refinement) Variable Standard Prices: Add an optional `standardPrice` field to `RecipeIngredient` to improve savings calculation precision.
+- [ ] (Optimization) Isolate-based Matching: Move heavy matching and scoring logic to a background Isolate to prevent UI jank with large datasets.
