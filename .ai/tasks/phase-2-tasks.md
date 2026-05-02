@@ -14,13 +14,15 @@
 
 ## 3. Offer Extraction Logic
 - [x] Develop Regex logic to extract product names and prices from raw text.
-- [ ] Implement a "Review & Correct" UI flow (Presentation layer) to allow users to verify extracted offers.
-- [ ] Save extracted offers to the Drift database.
+- [x] Implement Ingestion Controller and State using Riverpod.
+- [x] Create `BrochureIngestionPage` for file selection and preview.
+- [ ] Implement a "Review & Correct" UI flow (detailed editing) to allow users to verify extracted offers.
+- [x] Save extracted offers to the Drift database (Initial implementation in controller).
 
 ## 4. Localization & Multi-language Support
-- [ ] Add `flutter_localizations` dependency to `pubspec.yaml`.
-- [ ] Setup `l10n.yaml` and initialize ARB files for German (`app_de.arb`).
-- [ ] Implement a basic localization delegate and verify it with a "Welcome" string.
+- [x] Add `flutter_localizations` dependency to `pubspec.yaml`.
+- [x] Setup `l10n.yaml` and initialize ARB files for German (`app_de.arb`).
+- [x] Implement a basic localization delegate and apply it to UI.
 - [ ] (Future) Prepare for English support by ensuring all UI strings are localized.
 
 ## 5. Testing & Verification
