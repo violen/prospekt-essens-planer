@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../../domain/entities/offer.dart';
 import '../controllers/ingestion_controller.dart';
 import '../controllers/ingestion_state.dart';
 

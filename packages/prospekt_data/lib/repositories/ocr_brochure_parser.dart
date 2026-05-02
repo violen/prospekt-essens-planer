@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import '../../domain/entities/offer.dart';
-import '../../domain/repositories/brochure_parser.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 
 class OcrBrochureParser implements BrochureParser {
   final TextRecognizer _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);

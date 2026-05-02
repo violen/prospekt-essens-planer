@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
-import '../../domain/entities/offer.dart';
-import '../../domain/repositories/offer_repository.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import '../local/database.dart';
 
 class OfferRepositoryImpl implements OfferRepository {

@@ -1,17 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/local/database.dart';
-import '../data/repositories/brochure_repository_impl.dart';
-import '../data/repositories/composite_brochure_parser.dart';
-import '../data/repositories/meal_plan_repository_impl.dart';
-import '../data/repositories/ocr_brochure_parser.dart';
-import '../data/repositories/offer_repository_impl.dart';
-import '../data/repositories/pdf_brochure_parser.dart';
-import '../data/repositories/recipe_repository_impl.dart';
-import '../domain/repositories/brochure_parser.dart';
-import '../domain/repositories/brochure_repository.dart';
-import '../domain/repositories/meal_plan_repository.dart';
-import '../domain/repositories/offer_repository.dart';
-import '../domain/repositories/recipe_repository.dart';
+import 'package:prospekt_core/prospekt_core.dart';
+import 'package:prospekt_data/prospekt_data.dart';
 
 final databaseProvider = Provider<AppDatabase>((ref) {
   final db = AppDatabase();
@@ -55,4 +44,3 @@ final brochureParserProvider = Provider<BrochureParser>((ref) {
     ref.watch(ocrBrochureParserProvider),
   );
 });
-
