@@ -10,6 +10,8 @@ We use the `.ai` folder to manage the development lifecycle:
 - **Plans:** Detailed implementation plans in `.ai/plans/`.
 
 ## Strategic Mandates (Enforced Skills)
+- **BDD Workspace:** Always manage Maestro tests and artifacts from the root maestro/ directory. Avoid creating feature-specific maestro folders inside packages or apps.
+
 0.  **Workflow Validator:** Proactive audit as "Step 0" for any new task. Ensures a feature branch and an open MR/PR exist BEFORE writing code.
 1.  **Workflow Guard:** Strictly FORBIDDEN to commit directly to protected branches (`main`, `master`, `develop`). All work must happen in feature branches.
 2.  **Secret Safety:** Active scanning via `secret-detection`. NEVER commit secrets or API tokens. Rigorously protect `.env` files and `.github/token`.
@@ -22,3 +24,4 @@ We use the `.ai` folder to manage the development lifecycle:
 - `apps/prospekt_essens_planer/`: Main Flutter application.
 - `melos.yaml`: Monorepo configuration.
 - `.version-fox.toml`: Tool version management.
+

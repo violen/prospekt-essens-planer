@@ -1,0 +1,14 @@
+# Diagnostic Flow: File Picker Investigation
+# Use this to verify coordinates or hierarchy in the Android file picker.
+appId: com.violen.prospekt_essens_planer.prospekt_essens_planer
+---
+- launchApp
+- tapOn: "Import.*"
+- tapOn: "Datei auswählen.*"
+# Wait for the system picker to settle
+- stopApp: "com.violen.prospekt_essens_planer.prospekt_essens_planer"
+- launchApp
+- tapOn: "Import.*"
+- tapOn: "Datei auswählen.*"
+- takeScreenshot: "maestro/screenshots/file_picker_investigation"
+- dumpHierarchy: "maestro/debug/file_picker_hierarchy.json"

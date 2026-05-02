@@ -2,8 +2,17 @@
 
 This is the consolidated source of truth for current development and future enhancements.
 
-## ✅ Project Status: Phase 6 Completed (Verified)
-All development phases (1-6) have been successfully completed, verified on a live device, and merged into the main branch. The app is fully functional, professionally structured, and meets all core requirements.
+## 🟢 Current Phase: Phase 7 - Advanced Product Recognition (Started)
+**Goal:** Improve OCR and PDF extraction quality by filtering out non-food and drink items using an NLP heuristic pipeline.
+
+### 1. Product Classifier
+- [ ] Implement `ProductClassifier` in `prospekt_core` with dictionaries for drinks and non-food items.
+- [ ] Create unit tests to verify categorization logic.
+
+### 2. Parser Integration
+- [ ] Update `PdfBrochureParser` to use the `ProductClassifier`.
+- [ ] Update `OcrBrochureParser` to use the `ProductClassifier`.
+- [ ] Verify filtered extraction with real-world brochure data.
 
 ---
 
@@ -31,3 +40,4 @@ These items are deferred for future iterations.
 ### Infrastructure & Core
 - [ ] **English Localization:** Add full multi-language support.
 - [ ] **Custom Exceptions:** Enhance error handling in repositories.
+
