@@ -58,3 +58,7 @@ app.*.map.json
 # Sample Data
 sample_data/
 
+
+# Android Build Reports
+apps/prospekt_essens_planer/android/build/
+

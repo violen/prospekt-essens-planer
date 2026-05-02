@@ -1,21 +1,12 @@
 import 'dart:io';
 import 'package:meta/meta.dart';
-import 'package:pdf_text/pdf_text.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 
 class PdfBrochureParser implements BrochureParser {
   @override
   Future<List<Offer>> parse(File file, int brochureId) async {
-    try {
-      final PDFDoc doc = await PDFDoc.fromFile(file);
-      final String text = await doc.text;
-      
-      // Initial simple parsing logic - will be improved in Phase 2 Task 3
-      return extractOffersFromRawText(text, brochureId);
-    } catch (e) {
-      // For now, return empty list on error. Will be improved with custom exceptions.
-      return [];
-    }
+    // TODO: Re-implement PDF text extraction with a modern library (e.g. syncfusion or pdfx)
+    return [];
   }
 
   @visibleForTesting
