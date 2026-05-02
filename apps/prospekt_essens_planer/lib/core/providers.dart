@@ -44,3 +44,11 @@ final brochureParserProvider = Provider<BrochureParser>((ref) {
     ref.watch(ocrBrochureParserProvider),
   );
 });
+
+final matchingServiceProvider = Provider<MatchingService>((ref) {
+  return MatchingService();
+});
+
+final scoringServiceProvider = Provider<ScoringService>((ref) {
+  return ScoringService();
+});
