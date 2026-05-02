@@ -49,7 +49,7 @@ class WeeklyPlannerPage extends ConsumerWidget {
 class _DaySection extends StatelessWidget {
   final DateTime date;
 
-  const _DaySection({required this.date, super.key});
+  const _DaySection({required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class _MealPlanTitle extends ConsumerWidget {
   final int? recipeId;
   final String? customName;
 
-  const _MealPlanTitle({this.recipeId, this.customName, super.key});
+  const _MealPlanTitle({this.recipeId, this.customName});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
