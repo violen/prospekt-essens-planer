@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -43,7 +44,7 @@ class BrochureIngestionPage extends ConsumerWidget {
                       ? null 
                       : () => controller.takePhotoAndParse(),
                   icon: const Icon(Icons.camera_alt),
-                  tooltip: 'Foto aufnehmen',
+                  tooltip: l10n.takePhoto,
                 ),
               ],
             ),
@@ -52,7 +53,7 @@ class BrochureIngestionPage extends ConsumerWidget {
                 state.status == IngestionStatus.parsing)
               Center(
                 child: Semantics(
-                  label: 'Verarbeite Prospekt...',
+                  label: l10n.processingBrochure,
                   child: const CircularProgressIndicator(),
                 ),
               )
@@ -68,22 +69,30 @@ class BrochureIngestionPage extends ConsumerWidget {
                   itemCount: state.extractedOffers.length,
                   itemBuilder: (context, index) {
                     final offer = state.extractedOffers[index];
-                    return Dismissible(
-                      key: UniqueKey(),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (_) => controller.removeOffer(index),
-                      child: Card(
-                        child: ListTile(
-                          title: Text(offer.productName),
-                          subtitle: Text(offer.unit ?? ''),
-                          trailing: Text('${offer.price.toStringAsFixed(2)} €'),
-                          onTap: () => _showEditOfferDialog(context, ref, index, offer),
+                    return Semantics(
+                      customSemanticsActions: {
+                        CustomSemanticsAction(label: l10n.deleteOffer): () {
+                          controller.removeOffer(index);
+                          return true;
+                        },
+                      },
+                      child: Dismissible(
+                        key: UniqueKey(),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.red,
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
+                        onDismissed: (_) => controller.removeOffer(index),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(offer.productName),
+                            subtitle: Text(offer.unit ?? ''),
+                            trailing: Text('${offer.price.toStringAsFixed(2)} €'),
+                            onTap: () => _showEditOfferDialog(context, ref, index, offer),
+                          ),
                         ),
                       ),
                     );
@@ -102,10 +111,10 @@ class BrochureIngestionPage extends ConsumerWidget {
               Expanded(
                 child: EmptyState(
                   icon: Icons.file_present,
-                  title: 'Bereit zum Import',
+                  title: l10n.readyToImportTitle,
                   message: l10n.noFileSelected,
                   onAction: () => controller.pickAndParseFile(),
-                  actionLabel: 'Datei wählen',
+                  actionLabel: l10n.selectFileAction,
                 ),
               ),
           ],
@@ -115,30 +124,31 @@ class BrochureIngestionPage extends ConsumerWidget {
   }
 
   void _showEditOfferDialog(BuildContext context, WidgetRef ref, int index, Offer offer) {
+    final l10n = AppLocalizations.of(context)!;
     final nameController = TextEditingController(text: offer.productName);
     final priceController = TextEditingController(text: offer.price.toStringAsFixed(2));
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Angebot bearbeiten'),
+        title: Text(l10n.editOffer),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Produktname',
-                prefixIcon: Icon(Icons.shopping_basket),
+              decoration: InputDecoration(
+                labelText: l10n.productName,
+                prefixIcon: const Icon(Icons.shopping_basket),
               ),
               autofocus: true,
             ),
             const SizedBox(height: 16),
             TextField(
               controller: priceController,
-              decoration: const InputDecoration(
-                labelText: 'Preis',
-                prefixIcon: Icon(Icons.euro),
+              decoration: InputDecoration(
+                labelText: l10n.price,
+                prefixIcon: const Icon(Icons.euro),
                 suffixText: '€',
               ),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -148,7 +158,7 @@ class BrochureIngestionPage extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Abbrechen'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () {
@@ -160,7 +170,7 @@ class BrochureIngestionPage extends ConsumerWidget {
                 Navigator.pop(context);
               }
             },
-            child: const Text('Übernehmen'),
+            child: Text(l10n.apply),
           ),
         ],
       ),

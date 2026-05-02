@@ -18,6 +18,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get selectFile => 'Datei auswählen (PDF/Bild)';
 
   @override
+  String get takePhoto => 'Foto aufnehmen';
+
+  @override
   String offersFound(int count) {
     return '$count Angebote gefunden';
   }
@@ -45,4 +48,57 @@ class AppLocalizationsDe extends AppLocalizations {
   String errorPrefix(String message) {
     return 'Fehler: $message';
   }
+
+  @override
+  String get deleteOffer => 'Angebot löschen';
+
+  @override
+  String get editOffer => 'Angebot bearbeiten';
+
+  @override
+  String get productName => 'Produktname';
+
+  @override
+  String get price => 'Preis';
+
+  @override
+  String get apply => 'Übernehmen';
+
+  @override
+  String get refreshRecommendations => 'Empfehlungen aktualisieren';
+
+  @override
+  String get searchingRecommendations => 'Suche nach passenden Rezepten...';
+
+  @override
+  String get processingBrochure => 'Verarbeite Prospekt...';
+
+  @override
+  String get onOffer => 'Im Angebot';
+
+  @override
+  String get noOfferFound => 'Kein Angebot gefunden';
+
+  @override
+  String matchPercentage(String percent) {
+    return 'Übereinstimmung: $percent Prozent';
+  }
+
+  @override
+  String savingsAmount(String amount) {
+    return 'Ersparnis: $amount Euro';
+  }
+
+  @override
+  String get noRecommendationsTitle => 'Noch keine Empfehlungen';
+
+  @override
+  String get noRecommendationsMessage =>
+      'Importiere ein Prospekt oder erstelle Rezepte, um personalisierte Essensvorschläge zu erhalten.';
+
+  @override
+  String get readyToImportTitle => 'Bereit zum Import';
+
+  @override
+  String get selectFileAction => 'Datei wählen';
 }

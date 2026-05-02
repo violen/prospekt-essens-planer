@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/presentation/widgets/empty_state.dart';
 import '../controllers/meal_planner_controller.dart';
 import '../controllers/meal_planner_state.dart';
@@ -9,42 +10,43 @@ class MealPlannerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(mealPlannerControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Essensplaner Empfehlungen'),
+        title: Text(l10n.appTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => ref.read(mealPlannerControllerProvider.notifier).loadRecommendations(),
-            tooltip: 'Empfehlungen aktualisieren',
+            tooltip: l10n.refreshRecommendations,
           ),
         ],
       ),
-      body: _buildBody(context, state),
+      body: _buildBody(context, ref, state, l10n),
     );
   }
 
-  Widget _buildBody(BuildContext context, MealPlannerState state) {
+  Widget _buildBody(BuildContext context, WidgetRef ref, MealPlannerState state, AppLocalizations l10n) {
     if (state.status == MealPlannerStatus.loading) {
       return Center(
         child: Semantics(
-          label: 'Suche nach passenden Rezepten...',
+          label: l10n.searchingRecommendations,
           child: const CircularProgressIndicator(),
         ),
       );
     }
 
     if (state.status == MealPlannerStatus.error) {
-      return Center(child: Text('Fehler: ${state.errorMessage}'));
+      return Center(child: Text(l10n.errorPrefix(state.errorMessage ?? '')));
     }
 
     if (state.recommendations.isEmpty) {
-      return const EmptyState(
+      return EmptyState(
         icon: Icons.restaurant_menu,
-        title: 'Noch keine Empfehlungen',
-        message: 'Importiere ein Prospekt oder erstelle Rezepte, um personalisierte Essensvorschläge zu erhalten.',
+        title: l10n.noRecommendationsTitle,
+        message: l10n.noRecommendationsMessage,
       );
     }
 
@@ -59,7 +61,7 @@ class MealPlannerPage extends ConsumerWidget {
           child: ExpansionTile(
             title: Text(summary.recipe.name, style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Semantics(
-              label: 'Übereinstimmung: $matchPercentage Prozent. Ersparnis: ${summary.totalSavings.toStringAsFixed(2)} Euro',
+              label: '${l10n.matchPercentage(matchPercentage)}. ${l10n.savingsAmount(summary.totalSavings.toStringAsFixed(2))}',
               child: Text(
                 'Match: $matchPercentage% | Ersparnis: ${summary.totalSavings.toStringAsFixed(2)} €',
                 style: TextStyle(color: summary.matchRate > 0.5 ? Colors.green : Colors.grey),
@@ -78,9 +80,9 @@ class MealPlannerPage extends ConsumerWidget {
                       title: Text(match.ingredient.name),
                       subtitle: match.isMatch 
                         ? Text('Angebot: ${match.matchedOffer!.productName} (${match.matchedOffer!.price.toStringAsFixed(2)} €)')
-                        : const Text('Kein Angebot gefunden', style: TextStyle(fontStyle: FontStyle.italic)),
+                        : Text(l10n.noOfferFound, style: const TextStyle(fontStyle: FontStyle.italic)),
                       trailing: Semantics(
-                        label: match.isMatch ? 'Im Angebot' : 'Kein Angebot',
+                        label: match.isMatch ? l10n.onOffer : l10n.noOfferFound,
                         child: Icon(
                           match.isMatch ? Icons.check_circle : Icons.help_outline, 
                           color: match.isMatch ? Colors.green : Colors.orange,
