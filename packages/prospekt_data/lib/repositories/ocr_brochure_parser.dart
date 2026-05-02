@@ -4,6 +4,7 @@ import 'package:prospekt_core/prospekt_core.dart';
 
 class OcrBrochureParser implements BrochureParser {
   final TextRecognizer _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+  final ProductClassifier _classifier = ProductClassifier();
 
   @override
   Future<List<Offer>> parse(File file, int brochureId) async {
@@ -76,15 +77,18 @@ class OcrBrochureParser implements BrochureParser {
             }
 
             // Clean up product name from dangling chars
-            productName = productName.replaceAll(RegExp(r'^[^\w\d]+|[^\w\d]+$'), '').trim();
+            productName = productName.replaceAll(RegExp(r'^[^\w\däöüÄÖÜß]+|[^\w\däöüÄÖÜß]+$'), '').trim();
 
-            offers.add(Offer(
-              id: idCounter++,
-              brochureId: brochureId,
-              productName: productName,
-              price: price,
-              unit: unit,
-            ));
+            final category = _classifier.classify(productName, unit);
+            if (category == ProductCategory.food || category == ProductCategory.unknown) {
+              offers.add(Offer(
+                id: idCounter++,
+                brochureId: brochureId,
+                productName: productName,
+                price: price,
+                unit: unit,
+              ));
+            }
           }
         }
       }

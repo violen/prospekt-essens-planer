@@ -1,0 +1,13 @@
+appId: com.violen.prospekt_essens_planer.prospekt_essens_planer
+---
+- launchApp
+- tapOn: "Import.*"
+- tapOn: "Datei auswählen.*"
+- extendedWaitUntil:
+    visible: "Prospekt.*"
+    timeout: 5000
+- tapOn: "Prospekt.*"
+- extendedWaitUntil:
+    visible: ".*Angebote erkannt.*"
+    timeout: 30000
+- takeScreenshot: "maestro/screenshots/after_import_analysis"

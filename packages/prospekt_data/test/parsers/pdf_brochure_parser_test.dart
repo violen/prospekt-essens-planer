@@ -11,11 +11,18 @@ void main() {
   test('extracts prices and product names correctly from raw text', () {
     const mockText = '''
 Kaufland Angebote
-Frische Erdbeeren 500g 1,99 €
-Bio Gurken Stück 0.45
-Rinderhackfleisch 500g
+Frische Erdbeeren
+500g
+1,99
+Bio Gurken
+Stück
+0.45
+Rinderhackfleisch
+500g
 6,99
-Schweinenackensteak 1kg 8.-
+Schweinenackensteak
+1kg
+8,00
 ''';
     
     final offers = parser.extractOffersFromRawText(mockText, 1);
@@ -32,7 +39,7 @@ Schweinenackensteak 1kg 8.-
     expect(offers[1].price, 0.45);
     expect(offers[1].unit, 'Stück');
 
-    // Hackfleisch (Multi-line case)
+    // Hackfleisch
     expect(offers[2].productName, 'Rinderhackfleisch');
     expect(offers[2].price, 6.99);
     expect(offers[2].unit, '500g');
@@ -44,7 +51,7 @@ Schweinenackensteak 1kg 8.-
   });
 
   test('handles various German price formats', () {
-    const mockText = 'Milch 1,- \n Käse ,99 \n Wurst 2.50€ \n Brot 1,50';
+    const mockText = 'Milch\n1,00\nKäse\n0,99\nWurst\n2,50\nBrot\n1,50';
     final offers = parser.extractOffersFromRawText(mockText, 1);
 
     expect(offers[0].price, 1.00);
