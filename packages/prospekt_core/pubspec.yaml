@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.11.0
+  string_similarity: ^2.2.0
 
 dev_dependencies:
   flutter_test:
