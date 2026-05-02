@@ -38,8 +38,8 @@ class FixProductLibrary {
     ),
     FixProduct(
       brand: 'Maggi',
-      name: 'Bauerntopf',
-      requiredIngredients: ['Hackfleisch', 'Paprika', 'Kartoffeln'],
+      name: 'Bauerntopf mit Hackfleisch',
+      requiredIngredients: ['Hackfleisch', 'Kartoffeln', 'Paprika'],
     ),
     FixProduct(
       brand: 'Maggi',
@@ -54,7 +54,72 @@ class FixProductLibrary {
     FixProduct(
       brand: 'Maggi',
       name: 'Gulasch',
-      requiredIngredients: ['Gulasch', 'Zwiebeln'],
+      requiredIngredients: ['Gulaschfleisch', 'Zwiebeln'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Lachs-Sahne Gratin',
+      requiredIngredients: ['Lachs', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Zwiebel-Rahm Schnitzel',
+      requiredIngredients: ['Schnitzel', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Nudel-Schinken Gratin',
+      requiredIngredients: ['Schinken', 'Nudeln', 'Sahne', 'Käse'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Broccoli Gratin',
+      requiredIngredients: ['Broccoli', 'Käse'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Kartoffel Gratin',
+      requiredIngredients: ['Kartoffeln', 'Sahne', 'Käse'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Geschnetzeltes Zürcher Art',
+      requiredIngredients: ['Geschnetzeltes', 'Champignons'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Curry Geschnetzeltes',
+      requiredIngredients: ['Hähnchenbrust', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Magic Asia: Gebratene Nudeln',
+      requiredIngredients: ['Fleisch', 'Paprika', 'Lauchzwiebeln'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Gyros',
+      requiredIngredients: ['Geschnetzeltes'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Airfryer: Knusper Hähnchen',
+      requiredIngredients: ['Hähnchenbrustfilet'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Airfryer: Ofen-Gemüse mit Feta',
+      requiredIngredients: ['Paprika', 'Zucchini', 'Kartoffeln', 'Feta'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Airfryer: Chicken Nuggets & Wedges',
+      requiredIngredients: ['Hähnchenbrust', 'Kartoffeln'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Airfryer: Fajitas',
+      requiredIngredients: ['Hähnchenbrust', 'Paprika', 'Zwiebeln'],
     ),
 
     // --- KNORR ---
