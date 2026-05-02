@@ -30,15 +30,11 @@ class FixProduct {
 
 class FixProductLibrary {
   static final List<FixProduct> products = [
+    // --- MAGGI ---
     FixProduct(
       brand: 'Maggi',
       name: 'Lasagne',
       requiredIngredients: ['Hackfleisch', 'Lasagneplatten', 'Sahne', 'Käse'],
-    ),
-    FixProduct(
-      brand: 'Knorr',
-      name: 'Spaghetti Bolognese',
-      requiredIngredients: ['Hackfleisch', 'Spaghetti'],
     ),
     FixProduct(
       brand: 'Maggi',
@@ -46,9 +42,111 @@ class FixProductLibrary {
       requiredIngredients: ['Hackfleisch', 'Paprika', 'Kartoffeln'],
     ),
     FixProduct(
+      brand: 'Maggi',
+      name: 'Spaghetti Bolognese',
+      requiredIngredients: ['Hackfleisch', 'Spaghetti'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Chili con Carne',
+      requiredIngredients: ['Hackfleisch', 'Kidneybohnen', 'Mais'],
+    ),
+    FixProduct(
+      brand: 'Maggi',
+      name: 'Gulasch',
+      requiredIngredients: ['Gulasch', 'Zwiebeln'],
+    ),
+
+    // --- KNORR ---
+    FixProduct(
       brand: 'Knorr',
-      name: 'Rahm-Champignons',
+      name: 'Spaghetti Bolognese',
+      requiredIngredients: ['Hackfleisch', 'Spaghetti'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Bolognese Unsere Beste!',
+      requiredIngredients: ['Hackfleisch', 'Spaghetti'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Rahm Champignons',
       requiredIngredients: ['Champignons', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Gulasch',
+      requiredIngredients: ['Gulasch', 'Zwiebeln'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Lachs-Sahne Gratin',
+      requiredIngredients: ['Lachs', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Nudel-Schinken Gratin',
+      requiredIngredients: ['Schinken', 'Nudeln', 'Sahne', 'Käse'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Paprika-Rahm Schnitzel',
+      requiredIngredients: ['Schnitzel', 'Paprika', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Züricher Geschnetzeltes',
+      requiredIngredients: ['Geschnetzeltes', 'Champignons', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Hackbällchen Toscana',
+      requiredIngredients: ['Hackfleisch', 'Käse', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Puten Geschnetzeltes',
+      requiredIngredients: ['Putenbrust', 'Sahne', 'Champignons'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Bauerntopf mit Hackfleisch',
+      requiredIngredients: ['Hackfleisch', 'Paprika', 'Kartoffeln'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Kartoffel Gratin',
+      requiredIngredients: ['Kartoffeln', 'Sahne', 'Käse'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Brokkoli Gratin',
+      requiredIngredients: ['Brokkoli', 'Käse', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Hackfleisch Jäger Art',
+      requiredIngredients: ['Hackfleisch', 'Champignons'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Lachs auf Blattspinat',
+      requiredIngredients: ['Lachs', 'Blattspinat', 'Sahne'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Spaghetti alla Carbonara',
+      requiredIngredients: ['Speck', 'Sahne', 'Spaghetti'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Lasagne',
+      requiredIngredients: ['Hackfleisch', 'Lasagneplatten', 'Käse', 'Milch'],
+    ),
+    FixProduct(
+      brand: 'Knorr',
+      name: 'Gefüllte Ofen-Paprika',
+      requiredIngredients: ['Paprika', 'Hackfleisch', 'Käse'],
     ),
   ];
 }
