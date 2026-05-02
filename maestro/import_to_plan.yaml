@@ -1,0 +1,9 @@
+appId: com.violen.prospekt_essens_planer.prospekt_essens_planer
+---
+- launchApp
+- assertVisible: "Wochenplaner"
+- tapOn: "Import"
+- assertVisible: "Prospekt Importieren"
+- assertVisible: "Datei auswählen (PDF/Bild)"
+- tapOn: "Vorschläge"
+- assertVisible: "Essensplaner Empfehlungen"

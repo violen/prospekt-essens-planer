@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/presentation/widgets/empty_state.dart';
 import '../controllers/meal_planner_controller.dart';
 import '../controllers/meal_planner_state.dart';
+import '../controllers/weekly_planner_controller.dart';
 
 class MealPlannerPage extends ConsumerWidget {
   const MealPlannerPage({super.key});
@@ -73,7 +76,17 @@ class MealPlannerPage extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Zutaten & Angebote:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Zutaten & Angebote:', style: TextStyle(fontWeight: FontWeight.bold)),
+                        FilledButton.icon(
+                          onPressed: () => _showPlanAssignmentDialog(context, ref, summary.recipe),
+                          icon: const Icon(Icons.calendar_month),
+                          label: const Text('Einplanen'),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 8),
                     ...summary.ingredientMatches.map((match) => ListTile(
                       dense: true,
@@ -96,6 +109,67 @@ class MealPlannerPage extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+
+  void _showPlanAssignmentDialog(BuildContext context, WidgetRef ref, Recipe recipe) {
+    final now = DateTime.now();
+    final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('${recipe.name} einplanen'),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: 7,
+            itemBuilder: (context, index) {
+              final date = startOfWeek.add(Duration(days: index));
+              final dateStr = DateFormat('EEEE, dd.MM.').format(date);
+              
+              return ListTile(
+                title: Text(dateStr),
+                subtitle: const Text('Mittag- oder Abendessen'),
+                onTap: () {
+                  _showMealTypePicker(context, ref, date, recipe);
+                },
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showMealTypePicker(BuildContext context, WidgetRef ref, DateTime date, Recipe recipe) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.wb_sunny_outlined),
+            title: const Text('Mittagessen'),
+            onTap: () {
+              ref.read(weeklyPlannerControllerProvider.notifier).assignRecipe(date, 'lunch', recipe);
+              Navigator.pop(context); // Close sheet
+              Navigator.pop(context); // Close dialog
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.nightlight_outlined),
+            title: const Text('Abendessen'),
+            onTap: () {
+              ref.read(weeklyPlannerControllerProvider.notifier).assignRecipe(date, 'dinner', recipe);
+              Navigator.pop(context); // Close sheet
+              Navigator.pop(context); // Close dialog
+            },
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
     );
   }
 }

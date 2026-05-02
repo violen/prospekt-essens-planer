@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pdfrx/pdfrx.dart';
 import 'l10n/app_localizations.dart';
 import 'core/services/notification_service.dart';
 import 'features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
 import 'features/meal_planner/presentation/pages/meal_planner_page.dart';
 import 'features/meal_planner/presentation/pages/weekly_planner_page.dart';
+import 'features/meal_planner/presentation/pages/recipe_management_page.dart';
 
 void main() {
+  pdfrxFlutterInitialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -50,6 +53,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
   final List<Widget> _pages = [
     const WeeklyPlannerPage(),
     const MealPlannerPage(),
+    const RecipeManagementPage(),
     const BrochureIngestionPage(),
   ];
 
@@ -58,6 +62,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
         items: const [
@@ -68,6 +73,10 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu),
             label: 'Vorschläge',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long),
+            label: 'Rezepte',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.file_upload),
