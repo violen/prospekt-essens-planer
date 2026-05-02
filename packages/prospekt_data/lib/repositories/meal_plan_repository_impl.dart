@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
-import '../../domain/entities/meal_plan.dart';
-import '../../domain/repositories/meal_plan_repository.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import '../local/database.dart';
 
 class MealPlanRepositoryImpl implements MealPlanRepository {

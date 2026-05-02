@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:pdf_text/pdf_text.dart';
-import '../../domain/entities/offer.dart';
-import '../../domain/repositories/brochure_parser.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 
 class PdfBrochureParser implements BrochureParser {
   @override

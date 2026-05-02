@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: prospekt_core
+dependency_overrides:
+  prospekt_core:
+    path: ..\\prospekt_core

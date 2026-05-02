@@ -4,14 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:prospekt_essens_planer/core/providers.dart';
-import 'package:prospekt_essens_planer/domain/entities/offer.dart';
-import 'package:prospekt_essens_planer/domain/repositories/brochure_parser.dart';
+import 'package:prospekt_core/prospekt_core.dart';
+import 'package:prospekt_data/prospekt_data.dart';
 import 'package:prospekt_essens_planer/features/brochure_ingestion/presentation/controllers/ingestion_controller.dart';
 import 'package:prospekt_essens_planer/features/brochure_ingestion/presentation/controllers/ingestion_state.dart';
 import 'package:drift/native.dart';
-import 'package:prospekt_essens_planer/data/local/database.dart';
-import 'package:prospekt_essens_planer/data/repositories/brochure_repository_impl.dart';
-import 'package:prospekt_essens_planer/data/repositories/offer_repository_impl.dart';
 import 'package:drift/drift.dart';
 
 import 'ingestion_controller_test.mocks.dart';

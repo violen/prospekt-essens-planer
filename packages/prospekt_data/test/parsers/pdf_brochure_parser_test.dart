@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prospekt_essens_planer/data/repositories/pdf_brochure_parser.dart';
+import 'package:prospekt_data/prospekt_data.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 
 void main() {
   late PdfBrochureParser parser;

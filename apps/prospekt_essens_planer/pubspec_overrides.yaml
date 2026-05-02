@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: prospekt_core,prospekt_data
+dependency_overrides:
+  prospekt_core:
+    path: ..\\..\\packages\\prospekt_core
+  prospekt_data:
+    path: ..\\..\\packages\\prospekt_data

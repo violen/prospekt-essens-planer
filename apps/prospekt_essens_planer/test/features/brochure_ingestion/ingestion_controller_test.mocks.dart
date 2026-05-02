@@ -7,9 +7,8 @@ import 'dart:async' as _i3;
 import 'dart:io' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:prospekt_essens_planer/domain/entities/offer.dart' as _i4;
-import 'package:prospekt_essens_planer/domain/repositories/brochure_parser.dart'
-    as _i2;
+import 'package:prospekt_core/entities/offer.dart' as _i4;
+import 'package:prospekt_core/repositories/brochure_parser.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

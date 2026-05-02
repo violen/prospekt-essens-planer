@@ -3,8 +3,8 @@ import 'package:meta/meta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
-import '../../../../domain/entities/offer.dart';
 import 'ingestion_state.dart';
 
 final ingestionControllerProvider = StateNotifierProvider<IngestionController, IngestionState>((ref) {
@@ -82,7 +82,7 @@ class IngestionController extends StateNotifier<IngestionState> {
 
       // 2. Save all offers associated with this brochure
       for (final offer in state.extractedOffers) {
-        await offerRepo.insertOffer(offer.copyWith(brochureId: brochureId));
+        await offerRepo.insertOffer(offer.copyWith(brochureId: brochureId!));
       }
 
       state = state.copyWith(status: IngestionStatus.success, extractedOffers: []);

@@ -1,5 +1,5 @@
 import 'dart:io';
-import '../../../../domain/entities/offer.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 
 enum IngestionStatus { idle, loading, parsing, success, error }
 

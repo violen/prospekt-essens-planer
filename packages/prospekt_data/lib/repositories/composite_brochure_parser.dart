@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:path/path.dart' as p;
-import '../../domain/entities/offer.dart';
-import '../../domain/repositories/brochure_parser.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import 'pdf_brochure_parser.dart';
 import 'ocr_brochure_parser.dart';
 

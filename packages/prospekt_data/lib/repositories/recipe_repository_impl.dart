@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
-import '../../domain/entities/recipe.dart';
-import '../../domain/repositories/recipe_repository.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import '../local/database.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {

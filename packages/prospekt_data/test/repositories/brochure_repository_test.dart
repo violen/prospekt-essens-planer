@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:prospekt_essens_planer/data/local/database.dart';
-import 'package:prospekt_essens_planer/data/repositories/brochure_repository_impl.dart';
+import 'package:prospekt_data/prospekt_data.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 
 void main() {
   late AppDatabase database;

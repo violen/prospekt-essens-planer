@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
-import '../../domain/entities/brochure.dart';
-import '../../domain/repositories/brochure_repository.dart';
+import 'package:prospekt_core/prospekt_core.dart';
 import '../local/database.dart';
 
 class BrochureRepositoryImpl implements BrochureRepository {
