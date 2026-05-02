@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/presentation/widgets/empty_state.dart';
 import '../controllers/ingestion_controller.dart';
 import '../controllers/ingestion_state.dart';
 
@@ -98,7 +99,15 @@ class BrochureIngestionPage extends ConsumerWidget {
                 child: Text(l10n.saveOffers),
               ),
             ] else
-              Center(child: Text(l10n.noFileSelected)),
+              Expanded(
+                child: EmptyState(
+                  icon: Icons.file_present,
+                  title: 'Bereit zum Import',
+                  message: l10n.noFileSelected,
+                  onAction: () => controller.pickAndParseFile(),
+                  actionLabel: 'Datei wählen',
+                ),
+              ),
           ],
         ),
       ),
@@ -118,12 +127,21 @@ class BrochureIngestionPage extends ConsumerWidget {
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: 'Produktname'),
+              decoration: const InputDecoration(
+                labelText: 'Produktname',
+                prefixIcon: Icon(Icons.shopping_basket),
+              ),
+              autofocus: true,
             ),
+            const SizedBox(height: 16),
             TextField(
               controller: priceController,
-              decoration: const InputDecoration(labelText: 'Preis'),
-              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Preis',
+                prefixIcon: Icon(Icons.euro),
+                suffixText: '€',
+              ),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
           ],
         ),
@@ -132,12 +150,15 @@ class BrochureIngestionPage extends ConsumerWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text('Abbrechen'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () {
-              final newPrice = double.tryParse(priceController.text.replaceAll(',', '.')) ?? offer.price;
-              ref.read(ingestionControllerProvider.notifier)
-                 .updateOffer(index, nameController.text, newPrice);
-              Navigator.pop(context);
+              final text = priceController.text.replaceAll(',', '.');
+              final newPrice = double.tryParse(text);
+              if (newPrice != null && nameController.text.isNotEmpty) {
+                ref.read(ingestionControllerProvider.notifier)
+                   .updateOffer(index, nameController.text, newPrice);
+                Navigator.pop(context);
+              }
             },
             child: const Text('Übernehmen'),
           ),

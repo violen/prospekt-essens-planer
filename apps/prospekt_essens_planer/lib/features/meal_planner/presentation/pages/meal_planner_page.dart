@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/presentation/widgets/empty_state.dart';
 import '../controllers/meal_planner_controller.dart';
 import '../controllers/meal_planner_state.dart';
 
@@ -40,7 +41,11 @@ class MealPlannerPage extends ConsumerWidget {
     }
 
     if (state.recommendations.isEmpty) {
-      return const Center(child: Text('Keine Rezepte gefunden. Importiere ein Prospekt oder erstelle Rezepte.'));
+      return const EmptyState(
+        icon: Icons.restaurant_menu,
+        title: 'Noch keine Empfehlungen',
+        message: 'Importiere ein Prospekt oder erstelle Rezepte, um personalisierte Essensvorschläge zu erhalten.',
+      );
     }
 
     return ListView.builder(
