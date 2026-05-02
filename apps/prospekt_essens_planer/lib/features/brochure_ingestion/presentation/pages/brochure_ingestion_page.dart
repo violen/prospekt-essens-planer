@@ -22,13 +22,27 @@ class BrochureIngestionPage extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ElevatedButton.icon(
-              onPressed: state.status == IngestionStatus.loading || 
-                         state.status == IngestionStatus.parsing 
-                  ? null 
-                  : () => controller.pickAndParseFile(),
-              icon: const Icon(Icons.file_upload),
-              label: Text(l10n.selectFile),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: state.status == IngestionStatus.loading || 
+                               state.status == IngestionStatus.parsing 
+                        ? null 
+                        : () => controller.pickAndParseFile(),
+                    icon: const Icon(Icons.file_upload),
+                    label: Text(l10n.selectFile),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: state.status == IngestionStatus.loading || 
+                             state.status == IngestionStatus.parsing 
+                      ? null 
+                      : () => controller.takePhotoAndParse(),
+                  child: const Icon(Icons.camera_alt),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
             if (state.status == IngestionStatus.loading || 
@@ -46,11 +60,23 @@ class BrochureIngestionPage extends ConsumerWidget {
                   itemCount: state.extractedOffers.length,
                   itemBuilder: (context, index) {
                     final offer = state.extractedOffers[index];
-                    return Card(
-                      child: ListTile(
-                        title: Text(offer.productName),
-                        subtitle: Text(offer.unit ?? ''),
-                        trailing: Text('${offer.price.toStringAsFixed(2)} €'),
+                    return Dismissible(
+                      key: UniqueKey(),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: const Icon(Icons.delete, color: Colors.white),
+                      ),
+                      onDismissed: (_) => controller.removeOffer(index),
+                      child: Card(
+                        child: ListTile(
+                          title: Text(offer.productName),
+                          subtitle: Text(offer.unit ?? ''),
+                          trailing: Text('${offer.price.toStringAsFixed(2)} €'),
+                          onTap: () => _showEditOfferDialog(context, ref, index, offer),
+                        ),
                       ),
                     );
                   },
@@ -68,6 +94,47 @@ class BrochureIngestionPage extends ConsumerWidget {
               Center(child: Text(l10n.noFileSelected)),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showEditOfferDialog(BuildContext context, WidgetRef ref, int index, Offer offer) {
+    final nameController = TextEditingController(text: offer.productName);
+    final priceController = TextEditingController(text: offer.price.toStringAsFixed(2));
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Angebot bearbeiten'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: 'Produktname'),
+            ),
+            TextField(
+              controller: priceController,
+              decoration: const InputDecoration(labelText: 'Preis'),
+              keyboardType: TextInputType.number,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Abbrechen'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final newPrice = double.tryParse(priceController.text.replaceAll(',', '.')) ?? offer.price;
+              ref.read(ingestionControllerProvider.notifier)
+                 .updateOffer(index, nameController.text, newPrice);
+              Navigator.pop(context);
+            },
+            child: const Text('Übernehmen'),
+          ),
+        ],
       ),
     );
   }
