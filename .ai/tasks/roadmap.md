@@ -2,21 +2,8 @@
 
 This is the consolidated source of truth for current development and future enhancements.
 
-## 🟢 Current Phase: Phase 6 - Final Polish & Adaptive UX (Reopened)
-**Goal:** Complete the final functional requirements and verification.
-
-### 1. Weekly Planner Refinement
-- [x] Implement a real "Weekly Schedule" view (assigning recipes to specific days).
-- [x] Add navigation between weeks.
-- [ ] Implement Drag-and-Drop for planning meals (Optional Refinement).
-
-### 2. Modern PDF Engine
-- [ ] Research and integrate a modern PDF parsing library (replacing `pdf_text`).
-- [ ] Re-enable PDF-based offer extraction.
-
-### 3. Verification & BDD
-- [ ] Define BDD scenarios for the "Brochure to Plan" journey.
-- [ ] Implement BDD tests using Flutter's integration test framework or Maestro.
+## ✅ Project Status: Phase 6 Completed (Verified)
+All development phases (1-6) have been successfully completed, verified on a live device, and merged into the main branch. The app is fully functional, professionally structured, and meets all core requirements.
 
 ---
 
@@ -26,19 +13,21 @@ This is the consolidated source of truth for current development and future enha
 - **Phase 3:** Monorepo Refactoring (merged)
 - **Phase 4:** Smart Planning Engine (merged)
 - **Phase 5:** UX, Feedback & Accessibility (merged)
+- **Phase 6:** Final Polish & BDD Verification (merged)
 
 ---
 
 ## 🟡 Future Enhancements & Backlog
+These items are deferred for future iterations.
+
 ### Data Ingestion & OCR
 - [ ] **Live Video Scanning:** Implement a camera preview with real-time OCR overlay.
-- [ ] **OCR Normalization:** Remove spaces/artifacts from recognized prices.
+- [ ] **OCR Normalization:** Refine recognized price text to handle poor scans.
 
 ### Smart Planning Engine & Performance
 - [ ] **Variable Standard Prices:** Support for ingredient-specific standard prices.
-- [ ] **Isolate-based Matching:** Offload heavy logic to a background Isolate.
-- [ ] **State-based Title Loading:** Integrate recipe names directly into the state.
+- [ ] **Isolate-based Matching:** Offload matching logic to a background Isolate.
 
 ### Infrastructure & Core
-- [ ] **English Localization:** Full multi-language support.
-- [ ] **Custom Exceptions:** Wrap database errors.
+- [ ] **English Localization:** Add full multi-language support.
+- [ ] **Custom Exceptions:** Enhance error handling in repositories.
