@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/presentation/widgets/empty_state.dart';
 import '../controllers/ingestion_controller.dart';
 import '../controllers/ingestion_state.dart';
 
@@ -36,19 +38,25 @@ class BrochureIngestionPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                ElevatedButton(
+                IconButton.filledTonal(
                   onPressed: state.status == IngestionStatus.loading || 
                              state.status == IngestionStatus.parsing 
                       ? null 
                       : () => controller.takePhotoAndParse(),
-                  child: const Icon(Icons.camera_alt),
+                  icon: const Icon(Icons.camera_alt),
+                  tooltip: l10n.takePhoto,
                 ),
               ],
             ),
             const SizedBox(height: 16),
             if (state.status == IngestionStatus.loading || 
                 state.status == IngestionStatus.parsing)
-              const Center(child: CircularProgressIndicator())
+              Center(
+                child: Semantics(
+                  label: l10n.processingBrochure,
+                  child: const CircularProgressIndicator(),
+                ),
+              )
             else if (state.status == IngestionStatus.error)
               Text(l10n.errorPrefix(state.errorMessage ?? ''), 
                    style: const TextStyle(color: Colors.red))
@@ -61,22 +69,29 @@ class BrochureIngestionPage extends ConsumerWidget {
                   itemCount: state.extractedOffers.length,
                   itemBuilder: (context, index) {
                     final offer = state.extractedOffers[index];
-                    return Dismissible(
-                      key: UniqueKey(),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (_) => controller.removeOffer(index),
-                      child: Card(
-                        child: ListTile(
-                          title: Text(offer.productName),
-                          subtitle: Text(offer.unit ?? ''),
-                          trailing: Text('${offer.price.toStringAsFixed(2)} €'),
-                          onTap: () => _showEditOfferDialog(context, ref, index, offer),
+                    return Semantics(
+                      customSemanticsActions: {
+                        CustomSemanticsAction(label: l10n.deleteOffer): () {
+                          controller.removeOffer(index);
+                        },
+                      },
+                      child: Dismissible(
+                        key: UniqueKey(),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.red,
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
+                        onDismissed: (_) => controller.removeOffer(index),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(offer.productName),
+                            subtitle: Text(offer.unit ?? ''),
+                            trailing: Text('${offer.price.toStringAsFixed(2)} €'),
+                            onTap: () => _showEditOfferDialog(context, ref, index, offer),
+                          ),
                         ),
                       ),
                     );
@@ -92,7 +107,15 @@ class BrochureIngestionPage extends ConsumerWidget {
                 child: Text(l10n.saveOffers),
               ),
             ] else
-              Center(child: Text(l10n.noFileSelected)),
+              Expanded(
+                child: EmptyState(
+                  icon: Icons.file_present,
+                  title: l10n.readyToImportTitle,
+                  message: l10n.noFileSelected,
+                  onAction: () => controller.pickAndParseFile(),
+                  actionLabel: l10n.selectFileAction,
+                ),
+              ),
           ],
         ),
       ),
@@ -100,40 +123,53 @@ class BrochureIngestionPage extends ConsumerWidget {
   }
 
   void _showEditOfferDialog(BuildContext context, WidgetRef ref, int index, Offer offer) {
+    final l10n = AppLocalizations.of(context)!;
     final nameController = TextEditingController(text: offer.productName);
     final priceController = TextEditingController(text: offer.price.toStringAsFixed(2));
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Angebot bearbeiten'),
+        title: Text(l10n.editOffer),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: 'Produktname'),
+              decoration: InputDecoration(
+                labelText: l10n.productName,
+                prefixIcon: const Icon(Icons.shopping_basket),
+              ),
+              autofocus: true,
             ),
+            const SizedBox(height: 16),
             TextField(
               controller: priceController,
-              decoration: const InputDecoration(labelText: 'Preis'),
-              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: l10n.price,
+                prefixIcon: const Icon(Icons.euro),
+                suffixText: '€',
+              ),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Abbrechen'),
+            child: Text(l10n.cancel),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () {
-              final newPrice = double.tryParse(priceController.text.replaceAll(',', '.')) ?? offer.price;
-              ref.read(ingestionControllerProvider.notifier)
-                 .updateOffer(index, nameController.text, newPrice);
-              Navigator.pop(context);
+              final text = priceController.text.replaceAll(',', '.');
+              final newPrice = double.tryParse(text);
+              if (newPrice != null && nameController.text.isNotEmpty) {
+                ref.read(ingestionControllerProvider.notifier)
+                   .updateOffer(index, nameController.text, newPrice);
+                Navigator.pop(context);
+              }
             },
-            child: const Text('Übernehmen'),
+            child: Text(l10n.apply),
           ),
         ],
       ),

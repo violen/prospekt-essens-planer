@@ -15,6 +15,8 @@ import 'ingestion_controller_test.mocks.dart';
 
 @GenerateMocks([BrochureParser])
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  
   late MockBrochureParser mockParser;
   late AppDatabase database;
   late ProviderContainer container;

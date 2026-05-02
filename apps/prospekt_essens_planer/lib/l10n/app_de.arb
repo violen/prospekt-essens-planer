@@ -9,6 +9,7 @@
     "description": "Titel der Import-Seite"
   },
   "selectFile": "Datei auswählen (PDF/Bild)",
+  "takePhoto": "Foto aufnehmen",
   "offersFound": "{count} Angebote gefunden",
   "@offersFound": {
     "placeholders": {
@@ -30,5 +31,35 @@
         "type": "String"
       }
     }
-  }
+  },
+  "deleteOffer": "Angebot löschen",
+  "editOffer": "Angebot bearbeiten",
+  "productName": "Produktname",
+  "price": "Preis",
+  "apply": "Übernehmen",
+  "refreshRecommendations": "Empfehlungen aktualisieren",
+  "searchingRecommendations": "Suche nach passenden Rezepten...",
+  "processingBrochure": "Verarbeite Prospekt...",
+  "onOffer": "Im Angebot",
+  "noOfferFound": "Kein Angebot gefunden",
+  "matchPercentage": "Übereinstimmung: {percent} Prozent",
+  "@matchPercentage": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "savingsAmount": "Ersparnis: {amount} Euro",
+  "@savingsAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "noRecommendationsTitle": "Noch keine Empfehlungen",
+  "noRecommendationsMessage": "Importiere ein Prospekt oder erstelle Rezepte, um personalisierte Essensvorschläge zu erhalten.",
+  "readyToImportTitle": "Bereit zum Import",
+  "selectFileAction": "Datei wählen"
 }

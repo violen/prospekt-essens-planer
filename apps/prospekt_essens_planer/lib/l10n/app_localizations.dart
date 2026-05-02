@@ -112,6 +112,12 @@ abstract class AppLocalizations {
   /// **'Datei auswählen (PDF/Bild)'**
   String get selectFile;
 
+  /// No description provided for @takePhoto.
+  ///
+  /// In de, this message translates to:
+  /// **'Foto aufnehmen'**
+  String get takePhoto;
+
   /// No description provided for @offersFound.
   ///
   /// In de, this message translates to:
@@ -159,6 +165,102 @@ abstract class AppLocalizations {
   /// In de, this message translates to:
   /// **'Fehler: {message}'**
   String errorPrefix(String message);
+
+  /// No description provided for @deleteOffer.
+  ///
+  /// In de, this message translates to:
+  /// **'Angebot löschen'**
+  String get deleteOffer;
+
+  /// No description provided for @editOffer.
+  ///
+  /// In de, this message translates to:
+  /// **'Angebot bearbeiten'**
+  String get editOffer;
+
+  /// No description provided for @productName.
+  ///
+  /// In de, this message translates to:
+  /// **'Produktname'**
+  String get productName;
+
+  /// No description provided for @price.
+  ///
+  /// In de, this message translates to:
+  /// **'Preis'**
+  String get price;
+
+  /// No description provided for @apply.
+  ///
+  /// In de, this message translates to:
+  /// **'Übernehmen'**
+  String get apply;
+
+  /// No description provided for @refreshRecommendations.
+  ///
+  /// In de, this message translates to:
+  /// **'Empfehlungen aktualisieren'**
+  String get refreshRecommendations;
+
+  /// No description provided for @searchingRecommendations.
+  ///
+  /// In de, this message translates to:
+  /// **'Suche nach passenden Rezepten...'**
+  String get searchingRecommendations;
+
+  /// No description provided for @processingBrochure.
+  ///
+  /// In de, this message translates to:
+  /// **'Verarbeite Prospekt...'**
+  String get processingBrochure;
+
+  /// No description provided for @onOffer.
+  ///
+  /// In de, this message translates to:
+  /// **'Im Angebot'**
+  String get onOffer;
+
+  /// No description provided for @noOfferFound.
+  ///
+  /// In de, this message translates to:
+  /// **'Kein Angebot gefunden'**
+  String get noOfferFound;
+
+  /// No description provided for @matchPercentage.
+  ///
+  /// In de, this message translates to:
+  /// **'Übereinstimmung: {percent} Prozent'**
+  String matchPercentage(String percent);
+
+  /// No description provided for @savingsAmount.
+  ///
+  /// In de, this message translates to:
+  /// **'Ersparnis: {amount} Euro'**
+  String savingsAmount(String amount);
+
+  /// No description provided for @noRecommendationsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Noch keine Empfehlungen'**
+  String get noRecommendationsTitle;
+
+  /// No description provided for @noRecommendationsMessage.
+  ///
+  /// In de, this message translates to:
+  /// **'Importiere ein Prospekt oder erstelle Rezepte, um personalisierte Essensvorschläge zu erhalten.'**
+  String get noRecommendationsMessage;
+
+  /// No description provided for @readyToImportTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'Bereit zum Import'**
+  String get readyToImportTitle;
+
+  /// No description provided for @selectFileAction.
+  ///
+  /// In de, this message translates to:
+  /// **'Datei wählen'**
+  String get selectFileAction;
 }
 
 class _AppLocalizationsDelegate
