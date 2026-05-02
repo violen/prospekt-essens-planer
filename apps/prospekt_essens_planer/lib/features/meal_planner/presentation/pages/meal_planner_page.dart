@@ -17,6 +17,7 @@ class MealPlannerPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => ref.read(mealPlannerControllerProvider.notifier).loadRecommendations(),
+            tooltip: 'Empfehlungen aktualisieren',
           ),
         ],
       ),
@@ -26,7 +27,12 @@ class MealPlannerPage extends ConsumerWidget {
 
   Widget _buildBody(BuildContext context, MealPlannerState state) {
     if (state.status == MealPlannerStatus.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(
+        child: Semantics(
+          label: 'Suche nach passenden Rezepten...',
+          child: const CircularProgressIndicator(),
+        ),
+      );
     }
 
     if (state.status == MealPlannerStatus.error) {
@@ -41,13 +47,18 @@ class MealPlannerPage extends ConsumerWidget {
       itemCount: state.recommendations.length,
       itemBuilder: (context, index) {
         final summary = state.recommendations[index];
+        final matchPercentage = (summary.matchRate * 100).toStringAsFixed(0);
+        
         return Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: ExpansionTile(
             title: Text(summary.recipe.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(
-              'Match: ${(summary.matchRate * 100).toStringAsFixed(0)}% | Ersparnis: ${summary.totalSavings.toStringAsFixed(2)} €',
-              style: TextStyle(color: summary.matchRate > 0.5 ? Colors.green : Colors.grey),
+            subtitle: Semantics(
+              label: 'Übereinstimmung: $matchPercentage Prozent. Ersparnis: ${summary.totalSavings.toStringAsFixed(2)} Euro',
+              child: Text(
+                'Match: $matchPercentage% | Ersparnis: ${summary.totalSavings.toStringAsFixed(2)} €',
+                style: TextStyle(color: summary.matchRate > 0.5 ? Colors.green : Colors.grey),
+              ),
             ),
             children: [
               Padding(
@@ -63,9 +74,13 @@ class MealPlannerPage extends ConsumerWidget {
                       subtitle: match.isMatch 
                         ? Text('Angebot: ${match.matchedOffer!.productName} (${match.matchedOffer!.price.toStringAsFixed(2)} €)')
                         : const Text('Kein Angebot gefunden', style: TextStyle(fontStyle: FontStyle.italic)),
-                      trailing: match.isMatch 
-                        ? const Icon(Icons.check_circle, color: Colors.green)
-                        : const Icon(Icons.help_outline, color: Colors.orange),
+                      trailing: Semantics(
+                        label: match.isMatch ? 'Im Angebot' : 'Kein Angebot',
+                        child: Icon(
+                          match.isMatch ? Icons.check_circle : Icons.help_outline, 
+                          color: match.isMatch ? Colors.green : Colors.orange,
+                        ),
+                      ),
                     )),
                   ],
                 ),

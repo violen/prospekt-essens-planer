@@ -36,19 +36,25 @@ class BrochureIngestionPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                ElevatedButton(
+                IconButton.filledTonal(
                   onPressed: state.status == IngestionStatus.loading || 
                              state.status == IngestionStatus.parsing 
                       ? null 
                       : () => controller.takePhotoAndParse(),
-                  child: const Icon(Icons.camera_alt),
+                  icon: const Icon(Icons.camera_alt),
+                  tooltip: 'Foto aufnehmen',
                 ),
               ],
             ),
             const SizedBox(height: 16),
             if (state.status == IngestionStatus.loading || 
                 state.status == IngestionStatus.parsing)
-              const Center(child: CircularProgressIndicator())
+              Center(
+                child: Semantics(
+                  label: 'Verarbeite Prospekt...',
+                  child: const CircularProgressIndicator(),
+                ),
+              )
             else if (state.status == IngestionStatus.error)
               Text(l10n.errorPrefix(state.errorMessage ?? ''), 
                    style: const TextStyle(color: Colors.red))

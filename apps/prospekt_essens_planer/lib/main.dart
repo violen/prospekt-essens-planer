@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
+import 'core/services/notification_service.dart';
 import 'features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
 import 'features/meal_planner/presentation/pages/meal_planner_page.dart';
 
@@ -9,13 +10,14 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Prospekt Essens Planer',
+      scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

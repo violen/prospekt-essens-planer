@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
+import '../../../../core/services/notification_service.dart';
 import 'ingestion_state.dart';
 
 final ingestionControllerProvider = StateNotifierProvider<IngestionController, IngestionState>((ref) {
@@ -32,7 +33,7 @@ class IngestionController extends StateNotifier<IngestionState> {
         state = state.copyWith(status: IngestionStatus.idle);
       }
     } catch (e) {
-      state = state.copyWith(status: IngestionStatus.error, errorMessage: e.toString());
+      _handleError(e);
     }
   }
 
@@ -48,7 +49,7 @@ class IngestionController extends StateNotifier<IngestionState> {
         state = state.copyWith(status: IngestionStatus.idle);
       }
     } catch (e) {
-      state = state.copyWith(status: IngestionStatus.error, errorMessage: e.toString());
+      _handleError(e);
     }
   }
 
@@ -63,6 +64,8 @@ class IngestionController extends StateNotifier<IngestionState> {
       status: IngestionStatus.success,
       extractedOffers: offers,
     );
+    
+    _ref.read(notificationServiceProvider).showInfo('${offers.length} Angebote erkannt.');
   }
 
   Future<void> saveOffers(String brochureName) async {
@@ -86,9 +89,15 @@ class IngestionController extends StateNotifier<IngestionState> {
       }
 
       state = state.copyWith(status: IngestionStatus.success, extractedOffers: []);
+      _ref.read(notificationServiceProvider).showSuccess('Prospekt erfolgreich gespeichert.');
     } catch (e) {
-      state = state.copyWith(status: IngestionStatus.error, errorMessage: e.toString());
+      _handleError(e);
     }
+  }
+
+  void _handleError(Object e) {
+    state = state.copyWith(status: IngestionStatus.error, errorMessage: e.toString());
+    _ref.read(notificationServiceProvider).showError('Ein Fehler ist aufgetreten: $e');
   }
 
   void updateOffer(int index, String newName, double newPrice) {
