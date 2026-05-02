@@ -5,6 +5,7 @@ import 'l10n/app_localizations.dart';
 import 'core/services/notification_service.dart';
 import 'features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
 import 'features/meal_planner/presentation/pages/meal_planner_page.dart';
+import 'features/meal_planner/presentation/pages/weekly_planner_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -47,6 +48,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
+    const WeeklyPlannerPage(),
     const MealPlannerPage(),
     const BrochureIngestionPage(),
   ];
@@ -60,8 +62,12 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
         onTap: (index) => setState(() => _currentIndex = index),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant_menu),
+            icon: Icon(Icons.calendar_month),
             label: 'Planer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant_menu),
+            label: 'Vorschläge',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.file_upload),
