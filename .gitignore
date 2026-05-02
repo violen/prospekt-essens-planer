@@ -64,6 +64,6 @@ apps/prospekt_essens_planer/android/build/
 
 
 # Maestro Noise
-maestro/debug/
-maestro/screenshots/
+**/maestro/debug/
+**/maestro/screenshots/
 

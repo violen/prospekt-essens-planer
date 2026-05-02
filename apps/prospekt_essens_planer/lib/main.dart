@@ -4,7 +4,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'l10n/app_localizations.dart';
 import 'core/services/notification_service.dart';
-import 'core/providers.dart';
 import 'features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
 import 'features/meal_planner/presentation/pages/meal_planner_page.dart';
 import 'features/meal_planner/presentation/pages/weekly_planner_page.dart';
