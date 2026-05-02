@@ -11,54 +11,41 @@ To build a localized, on-device Flutter application for Android that automates w
 *   **Processing:** On-device execution (PDF parsing, OCR via ML Kit, local matching logic).
 *   **Testing:** TDD (Unit/Widget) and BDD (Integration).
 
-## Phase 1: Core Foundation & Data Persistence (Current Focus)
-**Goal:** Establish the monorepo structure, Clean Architecture layers, and the robust local database schema using Drift.
-
-1.  **Architecture Setup:**
-    *   Initialize folders for `domain`, `data`, and `presentation` layers within the main app (`apps/prospekt_essens_planer`).
-    *   Setup Riverpod providers for dependency injection.
-2.  **Database Design (Drift):**
-    *   Define core entities: `Brochure`, `Offer` (Ingredient + Price), `Recipe`, `RecipeIngredient`, `MealPlan`.
-    *   Implement relationships (e.g., matching a generic "Potato" in a recipe to a specific "Potatoes 2kg" offer).
-3.  **Database Implementation & Validation:**
-    *   Setup Drift with migration strategies in mind from day one.
-    *   Implement `beforeOpen` hook with `validateDatabaseSchema()` running only in `kDebugMode` to ensure schema integrity during development.
-    *   Write initial repository interfaces and their Drift implementations.
-4.  **TDD:** Write unit tests for the repositories and complex SQL queries (e.g., finding recipes where >50% of ingredients are on offer).
+## Phase 1: Core Foundation & Data Persistence
+**Goal:** Establish the monorepo structure, Clean Architecture layers, and the robust local database schema using Drift. (Status: Merged).
 
 ## Phase 2: Data Ingestion (Brochures & OCR)
-**Goal:** Enable the app to read and understand supermarket offers. (Current Progress: Completed, awaiting PR review).
+**Goal:** Enable the app to read and understand supermarket offers. (Status: Merged).
 
 ## Phase 3: Monorepo Refactoring (Architecture Alignment)
-**Goal:** Properly leverage the Melos monorepo structure by moving shared logic out of the main app.
-
-1.  **Package Creation:**
-    *   Create `packages/prospekt_core` for domain entities and base repository interfaces.
-    *   Create `packages/prospekt_data` for Drift database implementation and parser logic.
-2.  **Dependency Decoupling:** Update the main app to depend on these local packages via Melos.
-3.  **Verification:** Ensure all tests pass across all packages and the main app after the move.
+**Goal:** Properly leverage the Melos monorepo structure by moving shared logic out of the main app. (Status: Merged).
 
 ## Phase 4: The Smart Planning Engine
-**Goal:** The core business logic that connects offers to meals.
+**Goal:** The core business logic that connects offers to meals. (Status: Completed, awaiting PR review).
 
 1.  **Recipe Matching:** Implement the algorithm to suggest recipes based on active `Offers`.
-2.  **Convenience & Direct Items:**
-    *   Add logic to substitute complex recipes with convenience options (e.g., "Maggi Fix for Lasagna" + Meat on offer).
-    *   Handle direct item additions (e.g., frozen pizza on offer goes straight to the plan without a recipe).
-3.  **Price Calculation:** Calculate the total cost of a suggested meal and the savings compared to standard prices.
-4.  **TDD:** Rigorous unit testing of the matching and calculation algorithms to ensure accurate savings and logical suggestions.
+2.  **Savings Calculation:** Logic to calculate total savings per recipe based on current brochures.
+3.  **Initial Learning:** Scoring system that favors recipes chosen or highly rated by the user.
 
-## Phase 4: User Experience & Adaptive Learning
-**Goal:** Build the interactive UI and the preference learning loop.
+## Phase 5: UX, Feedback & Accessibility
+**Goal:** Ensure a professional, accessible, and intuitive user experience.
 
-1.  **UI Implementation (Riverpod):**
-    *   Build the drag-and-drop weekly planner interface.
-    *   Create views for browsing offers, managing recipes, and reviewing the shopping list.
-2.  **Adaptive Learning:**
-    *   Track user choices (accepted vs. rejected suggestions).
-    *   Adjust the scoring algorithm in the Smart Planning Engine to favor frequently chosen meals or ingredients.
-3.  **BDD (Maestro/Integration):** Write comprehensive UI tests for the core user journey: "Import Brochure -> Generate Plan -> Modify Plan -> View Shopping List".
+1.  **User Guidance & Feedback:**
+    *   Implement clear feedback for long-running processes (OCR, Parsing).
+    *   Use Snackbars and haptic feedback for success/error states.
+2.  **Accessibility (A11y):**
+    *   Ensure proper semantics for screen readers (Semantics widgets).
+    *   Verify color contrast and support for dynamic font sizes.
+3.  **UI Refinement:**
+    *   Polishing transitions and animations.
+    *   Implementing a consistent design language (Material 3).
+
+## Phase 6: Final Polish & Adaptive UX
+**Goal:** Build the final interactive UI elements and deepen the preference learning loop.
+
+1.  **UI Implementation:** Refine the drag-and-drop weekly planner interface.
+2.  **BDD (Maestro/Integration):** Write comprehensive UI tests for the core user journey.
 
 ## Verification
-*   **Continuous:** All commits must pass `melos run test` (enforced via Git Hygiene).
-*   **Phase Gates:** Each phase concludes with a review of the implemented features against the initial requirements before moving to the next.
+*   **Continuous:** All commits must pass `melos run test`.
+*   **Phase Gates:** Each phase concludes with a review of the implemented features before moving to the next.

@@ -1,4 +1,3 @@
-import '../entities/recipe.dart';
 import 'matching_service.dart';
 
 class ScoringService {
