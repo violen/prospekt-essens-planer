@@ -73,7 +73,6 @@ class BrochureIngestionPage extends ConsumerWidget {
                       customSemanticsActions: {
                         CustomSemanticsAction(label: l10n.deleteOffer): () {
                           controller.removeOffer(index);
-                          return true;
                         },
                       },
                       child: Dismissible(
