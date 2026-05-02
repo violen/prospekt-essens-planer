@@ -17,10 +17,12 @@ class RecipeManagementPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.manageRecipes),
       ),
-      body: state.isLoading 
-          ? const Center(child: CircularProgressIndicator())
-          : state.recipes.isEmpty
-              ? EmptyState(
+      body: state.errorMessage != null
+          ? Center(child: Text(l10n.errorPrefix(state.errorMessage!), style: const TextStyle(color: Colors.red)))
+          : state.isLoading 
+              ? const Center(child: CircularProgressIndicator())
+              : state.recipes.isEmpty
+                  ? EmptyState(
                   icon: Icons.receipt_long,
                   title: l10n.noRecipesTitle,
                   message: l10n.noRecipesMessage,

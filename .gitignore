@@ -62,3 +62,8 @@ sample_data/
 # Android Build Reports
 apps/prospekt_essens_planer/android/build/
 
+
+# Maestro Noise
+maestro/debug/
+maestro/screenshots/
+

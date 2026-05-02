@@ -25,7 +25,7 @@ class WeeklyPlannerPage extends ConsumerWidget {
           ),
           Center(
             child: Text(
-              l10n.kwPrefix(DateFormat('w').format(state.selectedWeekStart)),
+              l10n.kwPrefix(DateFormat('w', 'de').format(state.selectedWeekStart)),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -62,7 +62,7 @@ class _DaySection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Text(
-            DateFormat('EEEE, dd.MM.').format(date),
+            DateFormat('EEEE, dd.MM.', 'de').format(date),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.bold,

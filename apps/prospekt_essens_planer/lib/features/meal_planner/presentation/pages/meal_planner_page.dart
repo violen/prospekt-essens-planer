@@ -127,7 +127,7 @@ class MealPlannerPage extends ConsumerWidget {
             itemCount: 7,
             itemBuilder: (context, index) {
               final date = startOfWeek.add(Duration(days: index));
-              final dateStr = DateFormat('EEEE, dd.MM.').format(date);
+              final dateStr = DateFormat('EEEE, dd.MM.', 'de').format(date);
               
               return ListTile(
                 title: Text(dateStr),

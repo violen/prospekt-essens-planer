@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'l10n/app_localizations.dart';
 import 'core/services/notification_service.dart';
+import 'core/providers.dart';
 import 'features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
 import 'features/meal_planner/presentation/pages/meal_planner_page.dart';
 import 'features/meal_planner/presentation/pages/weekly_planner_page.dart';
 import 'features/meal_planner/presentation/pages/recipe_management_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('de', null);
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -57,28 +61,30 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Planer',
+            icon: const Icon(Icons.calendar_month),
+            label: l10n.planer,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant_menu),
-            label: 'Vorschläge',
+            icon: const Icon(Icons.restaurant_menu),
+            label: l10n.suggestions,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long),
-            label: 'Rezepte',
+            icon: const Icon(Icons.receipt_long),
+            label: l10n.recipes,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.file_upload),
-            label: 'Import',
+            icon: const Icon(Icons.file_upload),
+            label: l10n.import,
           ),
         ],
       ),
