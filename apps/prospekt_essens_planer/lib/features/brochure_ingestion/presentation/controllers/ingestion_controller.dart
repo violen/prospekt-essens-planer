@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:meta/meta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,7 +27,7 @@ class IngestionController extends StateNotifier<IngestionState> {
       );
 
       if (result != null && result.files.single.path != null) {
-        await _processFile(File(result.files.single.path!));
+        await processFile(File(result.files.single.path!));
       } else {
         state = state.copyWith(status: IngestionStatus.idle);
       }
@@ -42,7 +43,7 @@ class IngestionController extends StateNotifier<IngestionState> {
       final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
 
       if (photo != null) {
-        await _processFile(File(photo.path));
+        await processFile(File(photo.path));
       } else {
         state = state.copyWith(status: IngestionStatus.idle);
       }
@@ -51,7 +52,8 @@ class IngestionController extends StateNotifier<IngestionState> {
     }
   }
 
-  Future<void> _processFile(File file) async {
+  @visibleForTesting
+  Future<void> processFile(File file) async {
     state = state.copyWith(status: IngestionStatus.parsing, selectedFile: file);
 
     final parser = _ref.read(brochureParserProvider);
