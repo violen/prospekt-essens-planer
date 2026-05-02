@@ -10,7 +10,7 @@ void main() {
 
   test('extracts prices and product names correctly from raw text', () {
     const mockText = '''
-Kaufland Angebote
+Markt Angebote
 Frische Erdbeeren
 500g
 1,99
