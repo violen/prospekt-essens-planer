@@ -74,7 +74,7 @@ class MealPlannerPage extends ConsumerWidget {
                       color: Colors.orange.shade100,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Text('Fertiggericht', style: TextStyle(fontSize: 10, color: Colors.orange)),
+                    child: Text(l10n.readyMeal, style: const TextStyle(fontSize: 10, color: Colors.orange)),
                   ),
               ],
             ),
