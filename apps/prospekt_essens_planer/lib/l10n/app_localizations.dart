@@ -328,6 +328,12 @@ abstract class AppLocalizations {
   /// **'Zutat suchen (z.B. Kartoffel)...'**
   String get searchIngredient;
 
+  /// No description provided for @readyMeal.
+  ///
+  /// In de, this message translates to:
+  /// **'Fertiggericht'**
+  String get readyMeal;
+
   /// No description provided for @planer.
   ///
   /// In de, this message translates to:

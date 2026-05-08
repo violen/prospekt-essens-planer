@@ -53,13 +53,13 @@ void main() {
 
   test('loadAvailableIngredients populates state from market data', () async {
     final offerRepo = container.read(offerRepositoryProvider);
-    await offerRepo.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Kartoffeln', price: 1.0));
-    await offerRepo.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Käse', price: 2.0));
+    await offerRepo.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Bio Kartoffeln', normalizedName: 'Kartoffel', price: 1.0));
+    await offerRepo.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Gouda', normalizedName: 'Käse', price: 2.0));
 
     final controller = container.read(recipeControllerProvider.notifier);
     await controller.loadAvailableIngredients();
 
     final state = container.read(recipeControllerProvider);
-    expect(state.availableIngredients, containsAll(['Kartoffeln', 'Käse']));
+    expect(state.availableIngredients, containsAll(['Kartoffel', 'Käse']));
   });
 }

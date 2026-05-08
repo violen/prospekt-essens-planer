@@ -440,6 +440,32 @@ class $OffersTable extends Offers with TableInfo<$OffersTable, OfferEntry> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _normalizedNameMeta = const VerificationMeta(
+    'normalizedName',
+  );
+  @override
+  late final GeneratedColumn<String> normalizedName = GeneratedColumn<String>(
+    'normalized_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isReadyMealMeta = const VerificationMeta(
+    'isReadyMeal',
+  );
+  @override
+  late final GeneratedColumn<bool> isReadyMeal = GeneratedColumn<bool>(
+    'is_ready_meal',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_ready_meal" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -449,6 +475,8 @@ class $OffersTable extends Offers with TableInfo<$OffersTable, OfferEntry> {
     unit,
     discountInfo,
     category,
+    normalizedName,
+    isReadyMeal,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -513,6 +541,24 @@ class $OffersTable extends Offers with TableInfo<$OffersTable, OfferEntry> {
         category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
       );
     }
+    if (data.containsKey('normalized_name')) {
+      context.handle(
+        _normalizedNameMeta,
+        normalizedName.isAcceptableOrUnknown(
+          data['normalized_name']!,
+          _normalizedNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_ready_meal')) {
+      context.handle(
+        _isReadyMealMeta,
+        isReadyMeal.isAcceptableOrUnknown(
+          data['is_ready_meal']!,
+          _isReadyMealMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -550,6 +596,14 @@ class $OffersTable extends Offers with TableInfo<$OffersTable, OfferEntry> {
         DriftSqlType.string,
         data['${effectivePrefix}category'],
       ),
+      normalizedName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}normalized_name'],
+      ),
+      isReadyMeal: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_ready_meal'],
+      )!,
     );
   }
 
@@ -567,6 +621,8 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
   final String? unit;
   final String? discountInfo;
   final String? category;
+  final String? normalizedName;
+  final bool isReadyMeal;
   const OfferEntry({
     required this.id,
     required this.brochureId,
@@ -575,6 +631,8 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
     this.unit,
     this.discountInfo,
     this.category,
+    this.normalizedName,
+    required this.isReadyMeal,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -592,6 +650,10 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
     if (!nullToAbsent || category != null) {
       map['category'] = Variable<String>(category);
     }
+    if (!nullToAbsent || normalizedName != null) {
+      map['normalized_name'] = Variable<String>(normalizedName);
+    }
+    map['is_ready_meal'] = Variable<bool>(isReadyMeal);
     return map;
   }
 
@@ -608,6 +670,10 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
       category: category == null && nullToAbsent
           ? const Value.absent()
           : Value(category),
+      normalizedName: normalizedName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(normalizedName),
+      isReadyMeal: Value(isReadyMeal),
     );
   }
 
@@ -624,6 +690,8 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
       unit: serializer.fromJson<String?>(json['unit']),
       discountInfo: serializer.fromJson<String?>(json['discountInfo']),
       category: serializer.fromJson<String?>(json['category']),
+      normalizedName: serializer.fromJson<String?>(json['normalizedName']),
+      isReadyMeal: serializer.fromJson<bool>(json['isReadyMeal']),
     );
   }
   @override
@@ -637,6 +705,8 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
       'unit': serializer.toJson<String?>(unit),
       'discountInfo': serializer.toJson<String?>(discountInfo),
       'category': serializer.toJson<String?>(category),
+      'normalizedName': serializer.toJson<String?>(normalizedName),
+      'isReadyMeal': serializer.toJson<bool>(isReadyMeal),
     };
   }
 
@@ -648,6 +718,8 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
     Value<String?> unit = const Value.absent(),
     Value<String?> discountInfo = const Value.absent(),
     Value<String?> category = const Value.absent(),
+    Value<String?> normalizedName = const Value.absent(),
+    bool? isReadyMeal,
   }) => OfferEntry(
     id: id ?? this.id,
     brochureId: brochureId ?? this.brochureId,
@@ -656,6 +728,10 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
     unit: unit.present ? unit.value : this.unit,
     discountInfo: discountInfo.present ? discountInfo.value : this.discountInfo,
     category: category.present ? category.value : this.category,
+    normalizedName: normalizedName.present
+        ? normalizedName.value
+        : this.normalizedName,
+    isReadyMeal: isReadyMeal ?? this.isReadyMeal,
   );
   OfferEntry copyWithCompanion(OffersCompanion data) {
     return OfferEntry(
@@ -672,6 +748,12 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
           ? data.discountInfo.value
           : this.discountInfo,
       category: data.category.present ? data.category.value : this.category,
+      normalizedName: data.normalizedName.present
+          ? data.normalizedName.value
+          : this.normalizedName,
+      isReadyMeal: data.isReadyMeal.present
+          ? data.isReadyMeal.value
+          : this.isReadyMeal,
     );
   }
 
@@ -684,7 +766,9 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
           ..write('price: $price, ')
           ..write('unit: $unit, ')
           ..write('discountInfo: $discountInfo, ')
-          ..write('category: $category')
+          ..write('category: $category, ')
+          ..write('normalizedName: $normalizedName, ')
+          ..write('isReadyMeal: $isReadyMeal')
           ..write(')'))
         .toString();
   }
@@ -698,6 +782,8 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
     unit,
     discountInfo,
     category,
+    normalizedName,
+    isReadyMeal,
   );
   @override
   bool operator ==(Object other) =>
@@ -709,7 +795,9 @@ class OfferEntry extends DataClass implements Insertable<OfferEntry> {
           other.price == this.price &&
           other.unit == this.unit &&
           other.discountInfo == this.discountInfo &&
-          other.category == this.category);
+          other.category == this.category &&
+          other.normalizedName == this.normalizedName &&
+          other.isReadyMeal == this.isReadyMeal);
 }
 
 class OffersCompanion extends UpdateCompanion<OfferEntry> {
@@ -720,6 +808,8 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
   final Value<String?> unit;
   final Value<String?> discountInfo;
   final Value<String?> category;
+  final Value<String?> normalizedName;
+  final Value<bool> isReadyMeal;
   const OffersCompanion({
     this.id = const Value.absent(),
     this.brochureId = const Value.absent(),
@@ -728,6 +818,8 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
     this.unit = const Value.absent(),
     this.discountInfo = const Value.absent(),
     this.category = const Value.absent(),
+    this.normalizedName = const Value.absent(),
+    this.isReadyMeal = const Value.absent(),
   });
   OffersCompanion.insert({
     this.id = const Value.absent(),
@@ -737,6 +829,8 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
     this.unit = const Value.absent(),
     this.discountInfo = const Value.absent(),
     this.category = const Value.absent(),
+    this.normalizedName = const Value.absent(),
+    this.isReadyMeal = const Value.absent(),
   }) : brochureId = Value(brochureId),
        productName = Value(productName),
        price = Value(price);
@@ -748,6 +842,8 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
     Expression<String>? unit,
     Expression<String>? discountInfo,
     Expression<String>? category,
+    Expression<String>? normalizedName,
+    Expression<bool>? isReadyMeal,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -757,6 +853,8 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
       if (unit != null) 'unit': unit,
       if (discountInfo != null) 'discount_info': discountInfo,
       if (category != null) 'category': category,
+      if (normalizedName != null) 'normalized_name': normalizedName,
+      if (isReadyMeal != null) 'is_ready_meal': isReadyMeal,
     });
   }
 
@@ -768,6 +866,8 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
     Value<String?>? unit,
     Value<String?>? discountInfo,
     Value<String?>? category,
+    Value<String?>? normalizedName,
+    Value<bool>? isReadyMeal,
   }) {
     return OffersCompanion(
       id: id ?? this.id,
@@ -777,6 +877,8 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
       unit: unit ?? this.unit,
       discountInfo: discountInfo ?? this.discountInfo,
       category: category ?? this.category,
+      normalizedName: normalizedName ?? this.normalizedName,
+      isReadyMeal: isReadyMeal ?? this.isReadyMeal,
     );
   }
 
@@ -804,6 +906,12 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
     if (category.present) {
       map['category'] = Variable<String>(category.value);
     }
+    if (normalizedName.present) {
+      map['normalized_name'] = Variable<String>(normalizedName.value);
+    }
+    if (isReadyMeal.present) {
+      map['is_ready_meal'] = Variable<bool>(isReadyMeal.value);
+    }
     return map;
   }
 
@@ -816,7 +924,9 @@ class OffersCompanion extends UpdateCompanion<OfferEntry> {
           ..write('price: $price, ')
           ..write('unit: $unit, ')
           ..write('discountInfo: $discountInfo, ')
-          ..write('category: $category')
+          ..write('category: $category, ')
+          ..write('normalizedName: $normalizedName, ')
+          ..write('isReadyMeal: $isReadyMeal')
           ..write(')'))
         .toString();
   }
@@ -2221,6 +2331,8 @@ typedef $$OffersTableCreateCompanionBuilder =
       Value<String?> unit,
       Value<String?> discountInfo,
       Value<String?> category,
+      Value<String?> normalizedName,
+      Value<bool> isReadyMeal,
     });
 typedef $$OffersTableUpdateCompanionBuilder =
     OffersCompanion Function({
@@ -2231,6 +2343,8 @@ typedef $$OffersTableUpdateCompanionBuilder =
       Value<String?> unit,
       Value<String?> discountInfo,
       Value<String?> category,
+      Value<String?> normalizedName,
+      Value<bool> isReadyMeal,
     });
 
 final class $$OffersTableReferences
@@ -2291,6 +2405,16 @@ class $$OffersTableFilterComposer
 
   ColumnFilters<String> get category => $composableBuilder(
     column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get normalizedName => $composableBuilder(
+    column: $table.normalizedName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isReadyMeal => $composableBuilder(
+    column: $table.isReadyMeal,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2357,6 +2481,16 @@ class $$OffersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get normalizedName => $composableBuilder(
+    column: $table.normalizedName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isReadyMeal => $composableBuilder(
+    column: $table.isReadyMeal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$BrochuresTableOrderingComposer get brochureId {
     final $$BrochuresTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -2411,6 +2545,16 @@ class $$OffersTableAnnotationComposer
 
   GeneratedColumn<String> get category =>
       $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get normalizedName => $composableBuilder(
+    column: $table.normalizedName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isReadyMeal => $composableBuilder(
+    column: $table.isReadyMeal,
+    builder: (column) => column,
+  );
 
   $$BrochuresTableAnnotationComposer get brochureId {
     final $$BrochuresTableAnnotationComposer composer = $composerBuilder(
@@ -2471,6 +2615,8 @@ class $$OffersTableTableManager
                 Value<String?> unit = const Value.absent(),
                 Value<String?> discountInfo = const Value.absent(),
                 Value<String?> category = const Value.absent(),
+                Value<String?> normalizedName = const Value.absent(),
+                Value<bool> isReadyMeal = const Value.absent(),
               }) => OffersCompanion(
                 id: id,
                 brochureId: brochureId,
@@ -2479,6 +2625,8 @@ class $$OffersTableTableManager
                 unit: unit,
                 discountInfo: discountInfo,
                 category: category,
+                normalizedName: normalizedName,
+                isReadyMeal: isReadyMeal,
               ),
           createCompanionCallback:
               ({
@@ -2489,6 +2637,8 @@ class $$OffersTableTableManager
                 Value<String?> unit = const Value.absent(),
                 Value<String?> discountInfo = const Value.absent(),
                 Value<String?> category = const Value.absent(),
+                Value<String?> normalizedName = const Value.absent(),
+                Value<bool> isReadyMeal = const Value.absent(),
               }) => OffersCompanion.insert(
                 id: id,
                 brochureId: brochureId,
@@ -2497,6 +2647,8 @@ class $$OffersTableTableManager
                 unit: unit,
                 discountInfo: discountInfo,
                 category: category,
+                normalizedName: normalizedName,
+                isReadyMeal: isReadyMeal,
               ),
           withReferenceMapper: (p0) => p0
               .map(

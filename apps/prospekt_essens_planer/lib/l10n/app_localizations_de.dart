@@ -137,6 +137,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get searchIngredient => 'Zutat suchen (z.B. Kartoffel)...';
 
   @override
+  String get readyMeal => 'Fertiggericht';
+
+  @override
   String get planer => 'Planer';
 
   @override

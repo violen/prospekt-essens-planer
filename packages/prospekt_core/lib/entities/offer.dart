@@ -6,6 +6,8 @@ class Offer {
   final String? unit;
   final String? discountInfo;
   final String? category;
+  final String? normalizedName;
+  final bool? isReadyMeal;
 
   Offer({
     this.id,
@@ -15,6 +17,8 @@ class Offer {
     this.unit,
     this.discountInfo,
     this.category,
+    this.normalizedName,
+    this.isReadyMeal,
   });
 
   Offer copyWith({
@@ -25,6 +29,8 @@ class Offer {
     String? unit,
     String? discountInfo,
     String? category,
+    String? normalizedName,
+    bool? isReadyMeal,
   }) {
     return Offer(
       id: id ?? this.id,
@@ -34,6 +40,8 @@ class Offer {
       unit: unit ?? this.unit,
       discountInfo: discountInfo ?? this.discountInfo,
       category: category ?? this.category,
+      normalizedName: normalizedName ?? this.normalizedName,
+      isReadyMeal: isReadyMeal ?? this.isReadyMeal,
     );
   }
 }

@@ -91,9 +91,17 @@ class MatchingService {
 
     for (final offer in offers) {
       final offerName = offer.productName.toLowerCase();
+      final normalizedOfferName = offer.normalizedName?.toLowerCase();
       
       // 1. Direct contains check (High weight)
-      if (offerName.contains(ingredientName) || ingredientName.contains(offerName)) {
+      // Check both normalized and raw name
+      if (normalizedOfferName != null && (normalizedOfferName.contains(ingredientName) || ingredientName.contains(normalizedOfferName))) {
+        double score = 0.9; // Higher confidence for normalized matches
+        if (score > highestScore) {
+          highestScore = score;
+          bestOffer = offer;
+        }
+      } else if (offerName.contains(ingredientName) || ingredientName.contains(offerName)) {
         double score = 0.8;
         if ((offerName.length - ingredientName.length).abs() < 5) {
           score += 0.15;
@@ -106,7 +114,7 @@ class MatchingService {
       }
 
       // 2. Fuzzy similarity
-      final double fuzzyScore = ingredientName.similarityTo(offerName);
+      final double fuzzyScore = ingredientName.similarityTo(normalizedOfferName ?? offerName);
       if (fuzzyScore > highestScore) {
         highestScore = fuzzyScore;
         bestOffer = offer;

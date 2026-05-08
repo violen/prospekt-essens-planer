@@ -24,6 +24,8 @@ class OfferRepositoryImpl implements OfferRepository {
             unit: Value(offer.unit),
             discountInfo: Value(offer.discountInfo),
             category: Value(offer.category),
+            normalizedName: Value(offer.normalizedName),
+            isReadyMeal: Value(offer.isReadyMeal ?? false),
           ),
         );
   }
@@ -37,9 +39,11 @@ class OfferRepositoryImpl implements OfferRepository {
   @override
   Future<List<String>> getUniqueProductNames() async {
     final query = db.selectOnly(db.offers, distinct: true)
-      ..addColumns([db.offers.productName]);
+      ..addColumns([db.offers.normalizedName, db.offers.productName]);
     final rows = await query.get();
-    return rows.map((row) => row.read(db.offers.productName)!).toList();
+    return rows.map((row) {
+      return row.read(db.offers.normalizedName) ?? row.read(db.offers.productName)!;
+    }).toSet().toList(); // Ensure uniqueness if both columns exist
   }
 
   Offer _mapToEntity(OfferEntry row) {
@@ -51,6 +55,8 @@ class OfferRepositoryImpl implements OfferRepository {
       unit: row.unit,
       discountInfo: row.discountInfo,
       category: row.category,
+      normalizedName: row.normalizedName,
+      isReadyMeal: row.isReadyMeal,
     );
   }
 }

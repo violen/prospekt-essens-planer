@@ -12,6 +12,7 @@ export 'repositories/offer_repository.dart';
 export 'repositories/recipe_repository.dart';
 export 'services/matching_service.dart';
 export 'services/product_classifier.dart';
+export 'services/ingredient_normalizer.dart';
 export 'services/scoring_service.dart';
 
 
