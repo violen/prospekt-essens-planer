@@ -71,6 +71,8 @@
   "convenienceProduct": "Convenience (Knorr/Maggi)",
   "freshCooking": "Frisch kochen",
   "create": "Erstellen",
+  "addIngredients": "Zutaten hinzufügen",
+  "searchIngredient": "Zutat suchen (z.B. Kartoffel)...",
   "planer": "Planer",
   "suggestions": "Vorschläge",
   "recipes": "Rezepte",

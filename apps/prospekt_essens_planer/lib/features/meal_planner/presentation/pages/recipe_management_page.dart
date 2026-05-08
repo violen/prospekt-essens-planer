@@ -99,7 +99,7 @@ class RecipeManagementPage extends ConsumerWidget {
               ),
               const Divider(),
               const SizedBox(height: 8),
-              Text('Zutaten hinzufügen', style: Theme.of(context).textTheme.titleMedium),
+              Text(l10n.addIngredients, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               Autocomplete<String>(
                 optionsBuilder: (TextEditingValue textEditingValue) {
@@ -123,9 +123,9 @@ class RecipeManagementPage extends ConsumerWidget {
                   return TextField(
                     controller: controller,
                     focusNode: focusNode,
-                    decoration: const InputDecoration(
-                      hintText: 'Zutat suchen (z.B. Kartoffel)...',
-                      prefixIcon: Icon(Icons.search),
+                    decoration: InputDecoration(
+                      hintText: l10n.searchIngredient,
+                      prefixIcon: const Icon(Icons.search),
                     ),
                     textCapitalization: TextCapitalization.words,
                     onSubmitted: (value) {

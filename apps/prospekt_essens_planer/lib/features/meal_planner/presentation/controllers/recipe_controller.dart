@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
@@ -63,6 +64,7 @@ class RecipeController extends StateNotifier<RecipeState> {
       final names = await offerRepo.getUniqueProductNames();
       state = state.copyWith(availableIngredients: names);
     } catch (e) {
+      debugPrint('Error loading available ingredients: $e');
       // Non-blocking error for autocomplete
     }
   }
