@@ -131,6 +131,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get create => 'Erstellen';
 
   @override
+  String get addIngredients => 'Zutaten hinzufügen';
+
+  @override
+  String get searchIngredient => 'Zutat suchen (z.B. Kartoffel)...';
+
+  @override
   String get planer => 'Planer';
 
   @override

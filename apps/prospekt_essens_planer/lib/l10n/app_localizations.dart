@@ -316,6 +316,18 @@ abstract class AppLocalizations {
   /// **'Erstellen'**
   String get create;
 
+  /// No description provided for @addIngredients.
+  ///
+  /// In de, this message translates to:
+  /// **'Zutaten hinzufügen'**
+  String get addIngredients;
+
+  /// No description provided for @searchIngredient.
+  ///
+  /// In de, this message translates to:
+  /// **'Zutat suchen (z.B. Kartoffel)...'**
+  String get searchIngredient;
+
   /// No description provided for @planer.
   ///
   /// In de, this message translates to:

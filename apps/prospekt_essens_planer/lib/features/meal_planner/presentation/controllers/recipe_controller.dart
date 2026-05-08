@@ -1,17 +1,30 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
 
 class RecipeState {
   final List<Recipe> recipes;
+  final List<String> availableIngredients;
   final bool isLoading;
   final String? errorMessage;
 
-  RecipeState({this.recipes = const [], this.isLoading = false, this.errorMessage});
+  RecipeState({
+    this.recipes = const [], 
+    this.availableIngredients = const [],
+    this.isLoading = false, 
+    this.errorMessage,
+  });
 
-  RecipeState copyWith({List<Recipe>? recipes, bool? isLoading, String? errorMessage}) {
+  RecipeState copyWith({
+    List<Recipe>? recipes, 
+    List<String>? availableIngredients,
+    bool? isLoading, 
+    String? errorMessage,
+  }) {
     return RecipeState(
       recipes: recipes ?? this.recipes,
+      availableIngredients: availableIngredients ?? this.availableIngredients,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
     );
@@ -26,7 +39,12 @@ class RecipeController extends StateNotifier<RecipeState> {
   final Ref _ref;
 
   RecipeController(this._ref) : super(RecipeState()) {
-    loadRecipes();
+    _init();
+  }
+
+  Future<void> _init() async {
+    await loadRecipes();
+    await loadAvailableIngredients();
   }
 
   Future<void> loadRecipes() async {
@@ -34,21 +52,43 @@ class RecipeController extends StateNotifier<RecipeState> {
     try {
       final repo = _ref.read(recipeRepositoryProvider);
       final recipes = await repo.getAllRecipes();
+      if (!mounted) return;
       state = state.copyWith(recipes: recipes, isLoading: false);
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(isLoading: false, errorMessage: e.toString());
     }
   }
 
-  Future<void> addRecipe(String name, bool isConvenience) async {
+  Future<void> loadAvailableIngredients() async {
+    try {
+      final offerRepo = _ref.read(offerRepositoryProvider);
+      final names = await offerRepo.getUniqueProductNames();
+      if (!mounted) return;
+      state = state.copyWith(availableIngredients: names);
+    } catch (e) {
+      debugPrint('Error loading available ingredients: $e');
+      // Non-blocking error for autocomplete
+    }
+  }
+
+  Future<void> addRecipe(String name, bool isConvenience, List<String> ingredients) async {
     try {
       final repo = _ref.read(recipeRepositoryProvider);
+      
+      final recipeIngredients = ingredients.map((ing) => RecipeIngredient(
+        name: ing,
+        recipeId: 0, // Will be set by repo transaction
+      )).toList();
+
       await repo.insertRecipe(
         Recipe(name: name, isConvenience: isConvenience, rating: 0),
-        [],
+        recipeIngredients,
       );
+      if (!mounted) return;
       await loadRecipes();
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(errorMessage: e.toString());
     }
   }
@@ -57,8 +97,10 @@ class RecipeController extends StateNotifier<RecipeState> {
     try {
       final repo = _ref.read(recipeRepositoryProvider);
       await repo.deleteRecipe(id);
+      if (!mounted) return;
       await loadRecipes();
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(errorMessage: e.toString());
     }
   }

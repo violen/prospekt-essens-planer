@@ -34,6 +34,14 @@ class OfferRepositoryImpl implements OfferRepository {
     await query.go();
   }
 
+  @override
+  Future<List<String>> getUniqueProductNames() async {
+    final query = db.selectOnly(db.offers, distinct: true)
+      ..addColumns([db.offers.productName]);
+    final rows = await query.get();
+    return rows.map((row) => row.read(db.offers.productName)!).toList();
+  }
+
   Offer _mapToEntity(OfferEntry row) {
     return Offer(
       id: row.id,

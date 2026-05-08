@@ -26,7 +26,7 @@ class RecipeManagementPage extends ConsumerWidget {
                   icon: Icons.receipt_long,
                   title: l10n.noRecipesTitle,
                   message: l10n.noRecipesMessage,
-                  onAction: () => _showAddRecipeDialog(context, l10n, controller),
+                  onAction: () => _showAddRecipeSheet(context, l10n, controller, state.availableIngredients),
                   actionLabel: l10n.createRecipe,
                 )
               : ListView.builder(
@@ -46,52 +46,137 @@ class RecipeManagementPage extends ConsumerWidget {
                 ),
       floatingActionButton: FloatingActionButton(
         key: const Key('add_recipe_fab'),
-        onPressed: () => _showAddRecipeDialog(context, l10n, controller),
+        onPressed: () => _showAddRecipeSheet(context, l10n, controller, state.availableIngredients),
         tooltip: l10n.createRecipe,
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _showAddRecipeDialog(BuildContext context, AppLocalizations l10n, RecipeController controller) {
+  void _showAddRecipeSheet(
+    BuildContext context, 
+    AppLocalizations l10n, 
+    RecipeController controller,
+    List<String> suggestions,
+  ) {
     final nameController = TextEditingController();
+    final ingredientController = TextEditingController();
+    final FocusNode ingredientFocusNode = FocusNode();
     bool isConvenience = false;
+    final List<String> addedIngredients = [];
 
-    showDialog(
+    showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
       builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: Text(l10n.newRecipe),
-          content: Column(
+        builder: (context, setSheetState) => Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(l10n.newRecipe, style: Theme.of(context).textTheme.headlineSmall),
+              const SizedBox(height: 16),
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: l10n.dishName),
-                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: l10n.dishName,
+                  border: const OutlineInputBorder(),
+                ),
+                textCapitalization: TextCapitalization.words,
               ),
+              const SizedBox(height: 16),
               SwitchListTile(
                 title: Text(l10n.convenienceProduct),
                 value: isConvenience,
-                onChanged: (val) => setState(() => isConvenience = val),
+                onChanged: (val) => setSheetState(() => isConvenience = val),
               ),
+              const Divider(),
+              const SizedBox(height: 8),
+              Text(l10n.addIngredients, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 8),
+              Autocomplete<String>(
+                optionsBuilder: (TextEditingValue textEditingValue) {
+                  if (textEditingValue.text.length < 2) {
+                    return const Iterable<String>.empty();
+                  }
+                  return suggestions.where((String option) {
+                    return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                  });
+                },
+                onSelected: (String selection) {
+                  setSheetState(() {
+                    if (!addedIngredients.contains(selection)) {
+                      addedIngredients.add(selection);
+                    }
+                    ingredientController.clear();
+                  });
+                  ingredientFocusNode.requestFocus();
+                },
+                fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
+                  return TextField(
+                    controller: controller,
+                    focusNode: focusNode,
+                    decoration: InputDecoration(
+                      hintText: l10n.searchIngredient,
+                      prefixIcon: const Icon(Icons.search),
+                    ),
+                    textCapitalization: TextCapitalization.words,
+                    onSubmitted: (value) {
+                      if (value.isNotEmpty) {
+                        setSheetState(() {
+                          if (!addedIngredients.contains(value)) {
+                            addedIngredients.add(value);
+                          }
+                          controller.clear();
+                        });
+                        focusNode.requestFocus();
+                      }
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                children: addedIngredients.map((ing) => Chip(
+                  label: Text(ing),
+                  onDeleted: () => setSheetState(() => addedIngredients.remove(ing)),
+                )).toList(),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(l10n.cancel),
+                  ),
+                  const SizedBox(width: 8),
+                  FilledButton(
+                    onPressed: () async {
+                      if (nameController.text.isNotEmpty) {
+                        await controller.addRecipe(
+                          nameController.text, 
+                          isConvenience, 
+                          addedIngredients,
+                        );
+                        if (context.mounted) Navigator.pop(context);
+                      }
+                    },
+                    child: Text(l10n.create),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(l10n.cancel),
-            ),
-            FilledButton(
-              onPressed: () async {
-                if (nameController.text.isNotEmpty) {
-                  await controller.addRecipe(nameController.text, isConvenience);
-                  if (context.mounted) Navigator.pop(context);
-                }
-              },
-              child: Text(l10n.create),
-            ),
-          ],
         ),
       ),
     );
