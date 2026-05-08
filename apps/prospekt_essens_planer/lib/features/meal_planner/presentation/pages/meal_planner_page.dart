@@ -58,11 +58,26 @@ class MealPlannerPage extends ConsumerWidget {
       itemBuilder: (context, index) {
         final summary = state.recommendations[index];
         final matchPercentage = (summary.matchRate * 100).toStringAsFixed(0);
+        final isReadyMeal = summary.recipe.id == -2;
         
         return Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: ExpansionTile(
-            title: Text(summary.recipe.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+            leading: Icon(isReadyMeal ? Icons.fastfood_outlined : Icons.restaurant),
+            title: Row(
+              children: [
+                Expanded(child: Text(summary.recipe.name, style: const TextStyle(fontWeight: FontWeight.bold))),
+                if (isReadyMeal)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text('Fertiggericht', style: TextStyle(fontSize: 10, color: Colors.orange)),
+                  ),
+              ],
+            ),
             subtitle: Semantics(
               label: '${l10n.matchPercentage(matchPercentage)}. ${l10n.savingsAmount(summary.totalSavings.toStringAsFixed(2))}',
               child: Text(

@@ -5,6 +5,7 @@ import 'package:prospekt_core/prospekt_core.dart';
 class OcrBrochureParser implements BrochureParser {
   final TextRecognizer _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
   final ProductClassifier _classifier = ProductClassifier();
+  final IngredientNormalizer _normalizer = IngredientNormalizer();
 
   @override
   Future<List<Offer>> parse(File file, int brochureId) async {
@@ -81,12 +82,17 @@ class OcrBrochureParser implements BrochureParser {
 
             final category = _classifier.classify(productName, unit);
             if (category == ProductCategory.food || category == ProductCategory.unknown) {
+              final normalizedName = _normalizer.normalize(productName);
+              final isReadyMeal = _normalizer.isReadyMeal(productName);
+
               offers.add(Offer(
                 id: idCounter++,
                 brochureId: brochureId,
                 productName: productName,
                 price: price,
                 unit: unit,
+                normalizedName: normalizedName,
+                isReadyMeal: isReadyMeal,
               ));
             }
           }

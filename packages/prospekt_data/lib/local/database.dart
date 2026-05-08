@@ -25,6 +25,8 @@ class Offers extends Table {
   TextColumn get unit => text().nullable()(); // e.g., "kg", "Stück", "Packung"
   TextColumn get discountInfo => text().nullable()();
   TextColumn get category => text().nullable()();
+  TextColumn get normalizedName => text().nullable()();
+  BoolColumn get isReadyMeal => boolean().withDefault(const Constant(false))();
 }
 
 @DataClassName('RecipeEntry')
@@ -60,11 +62,18 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.connection);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
+      onUpgrade: (m, from, to) async {
+        if (from < 2) {
+          // Add normalizedName and isReadyMeal to Offers
+          await m.addColumn(offers, offers.normalizedName);
+          await m.addColumn(offers, offers.isReadyMeal);
+        }
+      },
       beforeOpen: (details) async {
         // if (kDebugMode) {
         //   // Validate database schema in debug mode

@@ -58,6 +58,42 @@ class MealPlannerController extends StateNotifier<MealPlannerState> {
         }
       }
 
+      // 3.2. Identify and Suggest Ready Meals (Direct matches)
+      final seenReadyMeals = <String>{};
+      for (final offer in allOffers) {
+        if (offer.isReadyMeal == true && offer.normalizedName != null) {
+          final mealName = offer.normalizedName!;
+          if (seenReadyMeals.contains(mealName)) continue;
+          
+          final virtualRecipe = Recipe(
+            id: -2, // Virtual ID for ready meals
+            name: mealName,
+            isConvenience: true,
+            rating: 4, // Prioritize ready meals slightly
+          );
+          
+          final virtualIngredient = RecipeIngredient(name: mealName, recipeId: -2);
+          
+          final summary = RecipeMatchSummary(
+            recipe: virtualRecipe,
+            ingredientMatches: [
+              MatchResult(
+                ingredient: virtualIngredient,
+                matchedOffer: offer,
+                confidence: 1.0,
+                estimatedStandardPrice: offer.price * 1.5, // Heuristic: 50% savings
+              ),
+            ],
+            totalCurrentPrice: offer.price,
+            totalEstimatedStandardPrice: offer.price * 1.5,
+            canUseConvenience: true,
+          );
+          
+          summaries.add(summary);
+          seenReadyMeals.add(mealName);
+        }
+      }
+
       // 4. Rank by preferences
       final ranked = scoringService.rankRecipes(summaries);
 

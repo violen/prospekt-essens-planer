@@ -19,16 +19,16 @@ void main() {
 
   test('getUniqueProductNames returns distinct offer names', () async {
     // 1. Insert multiple offers with some duplicates
-    await repository.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Kartoffeln', price: 1.99));
-    await repository.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Milch', price: 0.99));
-    await repository.insertOffer(Offer(id: 0, brochureId: 2, productName: 'Kartoffeln', price: 2.49));
-    await repository.insertOffer(Offer(id: 0, brochureId: 2, productName: 'Käse', price: 2.50));
+    await repository.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Bio Kartoffeln', normalizedName: 'Kartoffel', price: 1.99));
+    await repository.insertOffer(Offer(id: 0, brochureId: 1, productName: 'Milch', normalizedName: 'Milch', price: 0.99));
+    await repository.insertOffer(Offer(id: 0, brochureId: 2, productName: 'Speisekartoffeln', normalizedName: 'Kartoffel', price: 2.49));
+    await repository.insertOffer(Offer(id: 0, brochureId: 2, productName: 'Gouda', normalizedName: 'Käse', price: 2.50));
 
     // 2. Fetch unique names
     final uniqueNames = await repository.getUniqueProductNames();
 
     // 3. Verify
     expect(uniqueNames.length, 3);
-    expect(uniqueNames, containsAll(['Kartoffeln', 'Milch', 'Käse']));
+    expect(uniqueNames, containsAll(['Kartoffel', 'Milch', 'Käse']));
   });
 }
