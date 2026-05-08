@@ -19,17 +19,28 @@ This is the consolidated source of truth for current development and future enha
 - [x] Add `Autocomplete<String>` for ingredient input.
 - [x] Display ingredients as removable `Chip` widgets.
 
----
-
-## 🔵 Upcoming Phases
-
-### Phase 9: Semantic Normalization & Ready Meals
+## ✅ Completed Phase: Phase 9 - Semantic Normalization & Ready Meals
 - **Normalization:** Map marketing variations ("Bio Kartoffeln") to base ingredients ("Kartoffel").
 - **Ready Meals:** Support direct "Pizza" suggestions without predefined recipes.
 
-### Phase 10: App Redesign (Modernization)
-- Pastel color themes for Light Mode, optimized Dark Mode.
-- UX polish and improved navigation.
+---
+
+## 🟢 Current Phase: Phase 10 - App Redesign & Modernization (In Progress)
+**Goal:** Transition from functional MVP UI to a polished, modern application with pastel themes and improved UX.
+
+### 1. Theming & Colors
+- [ ] Implement a pastel-based color palette for Light Mode.
+- [ ] Optimize Dark Mode for high contrast and readability.
+- [ ] Define global `ThemeData` with updated typography.
+
+### 2. UI/UX Refinement
+- [ ] Improve navigation feedback and transitions.
+- [ ] Polish suggestion cards with better visual hierarchy.
+- [ ] Add loading skeletons for data-heavy views.
+
+---
+
+## 🔵 Upcoming Phases
 
 ### Phase 11: Interactive Onboarding & Tutorial
 - Guided step-by-step tour for new users.
@@ -42,3 +53,4 @@ This is the consolidated source of truth for current development and future enha
 ## ✅ Completed Phases
 - **Phase 1-6:** Core foundation, ingestion, monorepo refactoring, matching engine, verification.
 - **Phase 7:** Advanced Product Recognition (Heuristic Filtering via `ProductClassifier`).
+- **Phase 8:** Recipe & Ingredient Management (Autocomplete).
