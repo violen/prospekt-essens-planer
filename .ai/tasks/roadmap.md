@@ -42,15 +42,17 @@ This is the consolidated source of truth for current development and future enha
 
 ## ---
 
-## 🟢 Current Phase: Phase 11 - Onboarding & Tutorial (In Progress)
+## ✅ Completed Phase: Phase 11 - Onboarding & Tutorial
 **Goal:** Ensure new users understand the app's value proposition through a guided tour.
 
 ### 1. Tutorial Engine
-- [ ] Integrate a tutorial/feature-tour package (e.g., 	utorial_coach_mark).
-- [ ] Define highlight steps for Import, Recipes, and Suggestions.
+- [x] Integrate a tutorial/feature-tour package (`tutorial_coach_mark`).
+- [x] Define highlight steps for Import, Recipes, and Suggestions.
 
 ### 2. First-Launch Logic
-- [ ] Implement persistence to show tutorial only on first launch.
+- [x] Implement persistence to show tutorial only on first launch (`shared_preferences`).
+- [x] Added a replay mechanism via a help icon in the Weekly Planner.
+
 
 🔵 Upcoming Phases
 - Guided step-by-step tour for new users.

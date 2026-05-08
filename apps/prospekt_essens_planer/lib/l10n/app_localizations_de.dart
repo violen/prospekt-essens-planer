@@ -140,6 +140,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get readyMeal => 'Fertiggericht';
 
   @override
+  String get tutorialSkip => 'ÜBERSPRINGEN';
+
+  @override
+  String get tutorialImportTitle => '1. Prospekte Importieren';
+
+  @override
+  String get tutorialImportContent =>
+      'Hier fängst du an! Lade PDF-Prospekte oder Fotos hoch, um aktuelle Angebote zu sammeln.';
+
+  @override
+  String get tutorialRecipesTitle => '2. Rezepte Verwalten';
+
+  @override
+  String get tutorialRecipesContent =>
+      'Pflege hier deine Lieblingsgerichte und deren Zutaten ein.';
+
+  @override
+  String get tutorialSuggestionsTitle => '3. Intelligente Vorschläge';
+
+  @override
+  String get tutorialSuggestionsContent =>
+      'Die Magie passiert hier! Wir vergleichen deine Rezepte mit den Angeboten und zeigen dir, was du heute günstig kochen kannst.';
+
+  @override
+  String get tutorialPlannerTitle => '4. Wochenplaner';
+
+  @override
+  String get tutorialPlannerContent =>
+      'Strukturiere deine Woche und spare bares Geld beim Kochen.';
+
+  @override
   String get planer => 'Planer';
 
   @override
