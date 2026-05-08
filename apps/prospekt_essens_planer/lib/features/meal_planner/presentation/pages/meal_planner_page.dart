@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../core/presentation/widgets/empty_state.dart';
+import '../../../../core/presentation/widgets/skeleton_card.dart';
 import '../controllers/meal_planner_controller.dart';
 import '../controllers/meal_planner_state.dart';
 import '../controllers/weekly_planner_controller.dart';
@@ -33,12 +34,7 @@ class MealPlannerPage extends ConsumerWidget {
 
   Widget _buildBody(BuildContext context, WidgetRef ref, MealPlannerState state, AppLocalizations l10n) {
     if (state.status == MealPlannerStatus.loading) {
-      return Center(
-        child: Semantics(
-          label: l10n.searchingRecommendations,
-          child: const CircularProgressIndicator(),
-        ),
-      );
+      return const SkeletonList();
     }
 
     if (state.status == MealPlannerStatus.error) {
