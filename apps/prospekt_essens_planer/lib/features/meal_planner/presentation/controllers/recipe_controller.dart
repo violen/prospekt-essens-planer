@@ -52,8 +52,10 @@ class RecipeController extends StateNotifier<RecipeState> {
     try {
       final repo = _ref.read(recipeRepositoryProvider);
       final recipes = await repo.getAllRecipes();
+      if (!mounted) return;
       state = state.copyWith(recipes: recipes, isLoading: false);
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(isLoading: false, errorMessage: e.toString());
     }
   }
@@ -62,6 +64,7 @@ class RecipeController extends StateNotifier<RecipeState> {
     try {
       final offerRepo = _ref.read(offerRepositoryProvider);
       final names = await offerRepo.getUniqueProductNames();
+      if (!mounted) return;
       state = state.copyWith(availableIngredients: names);
     } catch (e) {
       debugPrint('Error loading available ingredients: $e');
@@ -82,8 +85,10 @@ class RecipeController extends StateNotifier<RecipeState> {
         Recipe(name: name, isConvenience: isConvenience, rating: 0),
         recipeIngredients,
       );
+      if (!mounted) return;
       await loadRecipes();
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(errorMessage: e.toString());
     }
   }
@@ -92,8 +97,10 @@ class RecipeController extends StateNotifier<RecipeState> {
     try {
       final repo = _ref.read(recipeRepositoryProvider);
       await repo.deleteRecipe(id);
+      if (!mounted) return;
       await loadRecipes();
     } catch (e) {
+      if (!mounted) return;
       state = state.copyWith(errorMessage: e.toString());
     }
   }
