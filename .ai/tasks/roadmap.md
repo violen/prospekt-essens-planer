@@ -2,43 +2,43 @@
 
 This is the consolidated source of truth for current development and future enhancements.
 
-## ✅ Completed Phase: Phase 7 - Advanced Product Recognition
-**Goal:** Improve OCR and PDF extraction quality by filtering out non-food and drink items using an NLP heuristic pipeline.
+## ✅ Completed Phase: Phase 8 - Recipe & Ingredient Management
+**Goal:** Enable users to define recipes with specific ingredients and use autocomplete based on market data.
 
-### 1. Product Classifier
-- [x] Implement `ProductClassifier` in `prospekt_core` with dictionaries for drinks and non-food items.
-- [x] Create unit tests to verify categorization logic.
+### 1. Data Layer
+- [x] Add `getUniqueProductNames` to `OfferRepository`.
+- [x] Implement `getUniqueProductNames` in `OfferRepositoryImpl` (Drift).
 
-### 2. Parser Integration
-- [x] Update `PdfBrochureParser` to use the `ProductClassifier`.
-- [x] Update `OcrBrochureParser` to use the `ProductClassifier`.
-- [x] Verify filtered extraction with real-world brochure data.
+### 2. State Management
+- [x] Update `RecipeState` with `availableIngredients`.
+- [x] Update `RecipeController` to fetch unique products on init.
+- [x] Modify `addRecipe` to accept a list of ingredient names.
+
+### 3. UI Redesign
+- [x] Implement `ModalBottomSheet` for recipe creation.
+- [x] Add `Autocomplete<String>` for ingredient input.
+- [x] Display ingredients as removable `Chip` widgets.
+
+---
+
+## 🔵 Upcoming Phases
+
+### Phase 9: Semantic Normalization & Ready Meals
+- **Normalization:** Map marketing variations ("Bio Kartoffeln") to base ingredients ("Kartoffel").
+- **Ready Meals:** Support direct "Pizza" suggestions without predefined recipes.
+
+### Phase 10: App Redesign (Modernization)
+- Pastel color themes for Light Mode, optimized Dark Mode.
+- UX polish and improved navigation.
+
+### Phase 11: Interactive Onboarding & Tutorial
+- Guided step-by-step tour for new users.
+
+### Phase 12: Continuous Recognition Optimization
+- Test-driven refinement using `sample_data/` assets.
 
 ---
 
 ## ✅ Completed Phases
-- **Phase 1:** Core Foundation & Data Persistence (merged)
-- **Phase 2:** Data Ingestion (merged)
-- **Phase 3:** Monorepo Refactoring (merged)
-- **Phase 4:** Smart Planning Engine (merged)
-- **Phase 5:** UX, Feedback & Accessibility (merged)
-- **Phase 6:** Final Polish & BDD Verification (merged)
-
----
-
-## 🟡 Future Enhancements & Backlog
-These items are deferred for future iterations.
-
-### Data Ingestion & OCR
-- [ ] **Live Video Scanning:** Implement a camera preview with real-time OCR overlay.
-- [ ] **OCR Normalization:** Refine recognized price text to handle poor scans.
-
-### Smart Planning Engine & Performance
-- [ ] **Variable Standard Prices:** Support for ingredient-specific standard prices.
-- [ ] **Isolate-based Matching:** Offload matching logic to a background Isolate.
-
-### Infrastructure & Core
-- [ ] **English Localization:** Add full multi-language support.
-- [ ] **Custom Exceptions:** Enhance error handling in repositories.
-
-
+- **Phase 1-6:** Core foundation, ingestion, monorepo refactoring, matching engine, verification.
+- **Phase 7:** Advanced Product Recognition (Heuristic Filtering via `ProductClassifier`).
