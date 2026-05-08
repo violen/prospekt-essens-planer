@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'l10n/app_localizations.dart';
 import 'core/services/notification_service.dart';
+import 'core/presentation/theme.dart';
 import 'features/brochure_ingestion/presentation/pages/brochure_ingestion_page.dart';
 import 'features/meal_planner/presentation/pages/meal_planner_page.dart';
 import 'features/meal_planner/presentation/pages/weekly_planner_page.dart';
@@ -32,10 +33,9 @@ class MyApp extends ConsumerWidget {
       supportedLocales: const [
         Locale('de'),
       ],
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       home: const MainNavigationShell(),
     );
   }
@@ -64,25 +64,28 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
 
     return Scaffold(
       body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.calendar_month),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) => setState(() => _currentIndex = index),
+        destinations: [
+          NavigationDestination(
+            icon: const Icon(Icons.calendar_month_outlined),
+            selectedIcon: const Icon(Icons.calendar_month),
             label: l10n.planer,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.restaurant_menu),
+          NavigationDestination(
+            icon: const Icon(Icons.restaurant_menu_outlined),
+            selectedIcon: const Icon(Icons.restaurant_menu),
             label: l10n.suggestions,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.receipt_long),
+          NavigationDestination(
+            icon: const Icon(Icons.receipt_long_outlined),
+            selectedIcon: const Icon(Icons.receipt_long),
             label: l10n.recipes,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.file_upload),
+          NavigationDestination(
+            icon: const Icon(Icons.file_upload_outlined),
+            selectedIcon: const Icon(Icons.file_upload),
             label: l10n.import,
           ),
         ],

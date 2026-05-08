@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/presentation/widgets/skeleton_card.dart';
 import '../controllers/weekly_planner_controller.dart';
 
 class WeeklyPlannerPage extends ConsumerWidget {
@@ -36,7 +37,7 @@ class WeeklyPlannerPage extends ConsumerWidget {
         ],
       ),
       body: state.isLoading 
-          ? const Center(child: CircularProgressIndicator())
+          ? const SkeletonList()
           : ListView.builder(
               itemCount: 7,
               itemBuilder: (context, index) {
