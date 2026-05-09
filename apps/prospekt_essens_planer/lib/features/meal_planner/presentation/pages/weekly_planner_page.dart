@@ -24,7 +24,7 @@ class WeeklyPlannerPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.help_outline),
             onPressed: () => ref.read(tutorialControllerProvider.notifier).restartTutorial(),
-            tooltip: 'Tutorial starten',
+            tooltip: l10n.startTutorial,
           ),
           IconButton(
             icon: const Icon(Icons.chevron_left),
