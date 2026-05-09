@@ -140,6 +140,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get readyMeal => 'Fertiggericht';
 
   @override
+  String get startTutorial => 'Tutorial starten';
+
+  @override
   String get tutorialSkip => 'ÜBERSPRINGEN';
 
   @override

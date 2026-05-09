@@ -56,22 +56,35 @@ This is the consolidated source of truth for current development and future enha
 
 ---
 
-## 🟢 Current Phase: Phase 12 - Smart Document Scanning (Started)
+## ✅ Completed Phase: Phase 12 - Smart Document Scanning
 **Goal:** Improve OCR quality by implementing a smart document scanner for photography.
 
 ### 1. Document Scanner API
-- [ ] Integrate Google ML Kit Document Scanner API.
-- [ ] Replace basic image_picker for brochures with the scanner UI.
+- [x] Integrate Google ML Kit Document Scanner API (`google_mlkit_document_scanner`).
+- [x] Replace basic `image_picker` for brochures with the scanner UI.
 
 ### 2. Post-Processing
-- [ ] Implement automatic cropping and perspective correction.
+- [x] Implement automatic cropping and perspective correction (provided by native scanner UI).
+
+
+---
+
+## ## 🟢 Current Phase: Phase 13 - Continuous Recognition Optimization (Started)
+**Goal:** Ensure 100% match rate for Fix-Products using real-world brochure samples.
+
+### 1. Test Environment
+- [ ] user adds raw PDFs/Photos to sample_data/.
+- [ ] AI embeds these as temporary assets in the debug build.
+
+### 2. Iterative Improvement
+- [ ] automated tests are written against specific real-world samples.
 
 ---
 
 ## 🔵 Upcoming Phases
 - Guided step-by-step tour for new users.
 
-### Phase 12: Continuous Recognition Optimization
+### Phase 13: Continuous Recognition Optimization
 - Test-driven refinement using `sample_data/` assets.
 
 ---
@@ -80,5 +93,6 @@ This is the consolidated source of truth for current development and future enha
 - **Phase 1-6:** Core foundation, ingestion, monorepo refactoring, matching engine, verification.
 - **Phase 7:** Advanced Product Recognition (Heuristic Filtering via `ProductClassifier`).
 - **Phase 8:** Recipe & Ingredient Management (Autocomplete).
+
 
 

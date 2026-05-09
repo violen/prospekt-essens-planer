@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:meta/meta.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:google_mlkit_document_scanner/google_mlkit_document_scanner.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
 import '../../../../core/services/notification_service.dart';
@@ -14,7 +14,6 @@ final ingestionControllerProvider = StateNotifierProvider<IngestionController, I
 
 class IngestionController extends StateNotifier<IngestionState> {
   final Ref _ref;
-  final ImagePicker _picker = ImagePicker();
 
   IngestionController(this._ref) : super(IngestionState(status: IngestionStatus.idle));
 
@@ -41,13 +40,20 @@ class IngestionController extends StateNotifier<IngestionState> {
     state = state.copyWith(status: IngestionStatus.loading);
 
     try {
-      final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+      final options = DocumentScannerOptions(
+        documentFormats: {DocumentFormat.jpeg},
+        mode: ScannerMode.full,
+        pageLimit: 1,
+      );
+      final scanner = DocumentScanner(options: options);
+      final result = await scanner.scanDocument();
 
-      if (photo != null) {
-        await processFile(File(photo.path));
+      if (result.images != null && result.images!.isNotEmpty) {
+        await processFile(File(result.images!.first));
       } else {
         state = state.copyWith(status: IngestionStatus.idle);
       }
+      scanner.close();
     } catch (e) {
       _handleError(e);
     }
