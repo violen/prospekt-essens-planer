@@ -334,6 +334,60 @@ abstract class AppLocalizations {
   /// **'Fertiggericht'**
   String get readyMeal;
 
+  /// No description provided for @tutorialSkip.
+  ///
+  /// In de, this message translates to:
+  /// **'ÜBERSPRINGEN'**
+  String get tutorialSkip;
+
+  /// No description provided for @tutorialImportTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'1. Prospekte Importieren'**
+  String get tutorialImportTitle;
+
+  /// No description provided for @tutorialImportContent.
+  ///
+  /// In de, this message translates to:
+  /// **'Hier fängst du an! Lade PDF-Prospekte oder Fotos hoch, um aktuelle Angebote zu sammeln.'**
+  String get tutorialImportContent;
+
+  /// No description provided for @tutorialRecipesTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'2. Rezepte Verwalten'**
+  String get tutorialRecipesTitle;
+
+  /// No description provided for @tutorialRecipesContent.
+  ///
+  /// In de, this message translates to:
+  /// **'Pflege hier deine Lieblingsgerichte und deren Zutaten ein.'**
+  String get tutorialRecipesContent;
+
+  /// No description provided for @tutorialSuggestionsTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'3. Intelligente Vorschläge'**
+  String get tutorialSuggestionsTitle;
+
+  /// No description provided for @tutorialSuggestionsContent.
+  ///
+  /// In de, this message translates to:
+  /// **'Die Magie passiert hier! Wir vergleichen deine Rezepte mit den Angeboten und zeigen dir, was du heute günstig kochen kannst.'**
+  String get tutorialSuggestionsContent;
+
+  /// No description provided for @tutorialPlannerTitle.
+  ///
+  /// In de, this message translates to:
+  /// **'4. Wochenplaner'**
+  String get tutorialPlannerTitle;
+
+  /// No description provided for @tutorialPlannerContent.
+  ///
+  /// In de, this message translates to:
+  /// **'Strukturiere deine Woche und spare bares Geld beim Kochen.'**
+  String get tutorialPlannerContent;
+
   /// No description provided for @planer.
   ///
   /// In de, this message translates to:

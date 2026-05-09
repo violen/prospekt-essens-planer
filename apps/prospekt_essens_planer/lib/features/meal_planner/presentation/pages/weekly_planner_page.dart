@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:prospekt_core/prospekt_core.dart';
 import '../../../../core/providers.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/presentation/controllers/tutorial_controller.dart';
 import '../../../../core/presentation/widgets/skeleton_card.dart';
 import '../controllers/weekly_planner_controller.dart';
 
@@ -20,6 +21,11 @@ class WeeklyPlannerPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.weeklyPlanner),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            onPressed: () => ref.read(tutorialControllerProvider.notifier).restartTutorial(),
+            tooltip: l10n.startTutorial,
+          ),
           IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: () => controller.previousWeek(),
