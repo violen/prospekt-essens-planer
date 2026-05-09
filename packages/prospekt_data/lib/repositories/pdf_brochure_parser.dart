@@ -10,6 +10,7 @@ class PdfBrochureParser implements BrochureParser {
 
   @override
   Future<List<Offer>> parse(File file, int brochureId) async {
+    print('DEBUG: Executing PdfBrochureParser V3 (with aggressive blacklist)');
     try {
       final String? text = await _channel.invokeMethod<String>('extractText', {
         'filePath': file.path,
@@ -44,7 +45,11 @@ class PdfBrochureParser implements BrochureParser {
     );
     
     final List<String> blacklistWords = [
-      'pfand', 'koffeinhaltig', 'inkl', 'mwst', 'pro', 'je', 'ca', 'ab', 'nur', 'statt', 'aus', 'unserer', 'knüller', 'aktion', 'billiger', 'rabatt', 'superpreis', 'dauerhaft', 'versch.', 'sorten', 'angebote', 'gültig'
+      'pfand', 'koffeinhaltig', 'inkl', 'mwst', 'pro', 'je', 'ca', 'ab', 'nur', 'statt', 'aus', 'unserer', 'knüller', 'aktion', 'billiger', 'rabatt', 'superpreis', 'dauerhaft', 'versch.', 'sorten', 'angebote', 'gültig',
+      'gmbh', 'straße', 'str.', 'platz', 'allee', 'weg', 'markt', 'märkte', 'filiale', 'niederlassung', 'druck', 'partner', 'service', 'info',
+      'uvp', 'sparen', 'kauf', 'einzelpreis', 'packungen', 'stückpreis', 'beim', 'von', 'nachlass', 'ermaessigt', 'reduziert',
+      'für', 'rabatt', 'aktion', 'knaller', 'preis', 'hammer', 'super', 'günstig', 'vorteil', 'cent', 'euro',
+      'punkte', 'extrapunkte', 'deutschlandcard', 'payback', 'coupon', 'rabatt-aktion', 'niedersachsen', 'bremen', 'hamburg'
     ];
 
     final lines = text.split('\n').map((l) => l.trim()).where((l) => l.isNotEmpty).toList();
@@ -105,7 +110,7 @@ class PdfBrochureParser implements BrochureParser {
           // Check blacklist
           bool isBlacklisted = false;
           for (final word in blacklistWords) {
-            if (lowerLine == word || lowerLine.startsWith('$word ') || lowerLine.endsWith(' $word')) {
+            if (lowerLine.contains(word)) {
               isBlacklisted = true;
               break;
             }
@@ -132,6 +137,10 @@ class PdfBrochureParser implements BrochureParser {
         if (productName.isNotEmpty) {
           // Clean up dangling chars
           productName = productName.replaceAll(RegExp(r'^[^\w\däöüÄÖÜß]+|[^\w\däöüÄÖÜß]+$'), '').trim();
+
+          // Skip if the product name is purely numeric or common discount garbage (like "20 %")
+          if (RegExp(r'^[\d\s\.,%\|\-\*/]+$').hasMatch(productName)) continue;
+          if (productName.length < 3) continue;
 
           // Deduplicate and classify offers
           if (!offers.any((o) => o.productName == productName && o.price == price)) {

@@ -67,3 +67,6 @@ apps/prospekt_essens_planer/android/build/
 **/maestro/debug/
 **/maestro/screenshots/
 
+
+# Test Assets
+**/assets/test_samples/

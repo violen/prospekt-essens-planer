@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:google_mlkit_document_scanner/google_mlkit_document_scanner.dart';
@@ -59,12 +62,34 @@ class IngestionController extends StateNotifier<IngestionState> {
     }
   }
 
+  Future<void> loadAndProcessAsset(String assetPath) async {
+    state = state.copyWith(status: IngestionStatus.loading);
+
+    try {
+      final byteData = await rootBundle.load(assetPath);
+      final tempDir = await getTemporaryDirectory();
+      final fileName = assetPath.split('/').last;
+      final file = File('${tempDir.path}/$fileName');
+
+      await file.writeAsBytes(byteData.buffer.asUint8List(
+        byteData.offsetInBytes, 
+        byteData.lengthInBytes,
+      ));
+
+      await processFile(file);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
   @visibleForTesting
   Future<void> processFile(File file) async {
     state = state.copyWith(status: IngestionStatus.parsing, selectedFile: file);
 
     final parser = _ref.read(brochureParserProvider);
     final offers = await parser.parse(file, 0);
+
+    debugPrint('INGESTION_DEBUG: Controller received ${offers.length} offers.');
 
     state = state.copyWith(
       status: IngestionStatus.success,
