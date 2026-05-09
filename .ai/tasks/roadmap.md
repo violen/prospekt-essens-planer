@@ -54,7 +54,21 @@ This is the consolidated source of truth for current development and future enha
 - [x] Added a replay mechanism via a help icon in the Weekly Planner.
 
 
-🔵 Upcoming Phases
+---
+
+## 🟢 Current Phase: Phase 12 - Smart Document Scanning (Started)
+**Goal:** Improve OCR quality by implementing a smart document scanner for photography.
+
+### 1. Document Scanner API
+- [ ] Integrate Google ML Kit Document Scanner API.
+- [ ] Replace basic image_picker for brochures with the scanner UI.
+
+### 2. Post-Processing
+- [ ] Implement automatic cropping and perspective correction.
+
+---
+
+## 🔵 Upcoming Phases
 - Guided step-by-step tour for new users.
 
 ### Phase 12: Continuous Recognition Optimization
@@ -66,4 +80,5 @@ This is the consolidated source of truth for current development and future enha
 - **Phase 1-6:** Core foundation, ingestion, monorepo refactoring, matching engine, verification.
 - **Phase 7:** Advanced Product Recognition (Heuristic Filtering via `ProductClassifier`).
 - **Phase 8:** Recipe & Ingredient Management (Autocomplete).
+
 
