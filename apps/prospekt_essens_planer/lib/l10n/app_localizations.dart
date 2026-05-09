@@ -334,6 +334,12 @@ abstract class AppLocalizations {
   /// **'Fertiggericht'**
   String get readyMeal;
 
+  /// No description provided for @startTutorial.
+  ///
+  /// In de, this message translates to:
+  /// **'Tutorial starten'**
+  String get startTutorial;
+
   /// No description provided for @tutorialSkip.
   ///
   /// In de, this message translates to:
