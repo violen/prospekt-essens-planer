@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:meta/meta.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:google_mlkit_document_scanner/google_mlkit_document_scanner.dart';
 import 'package:prospekt_core/prospekt_core.dart';
+import 'package:gal/gal.dart';
 import '../../../../core/providers.dart';
 import '../../../../core/services/notification_service.dart';
 import 'ingestion_state.dart';
@@ -62,6 +62,35 @@ class IngestionController extends StateNotifier<IngestionState> {
     }
   }
 
+  Future<void> scanAndSaveToGallery() async {
+    state = state.copyWith(status: IngestionStatus.loading);
+    try {
+      final options = DocumentScannerOptions(
+        documentFormats: {DocumentFormat.jpeg},
+        mode: ScannerMode.full,
+        pageLimit: 1,
+      );
+      final scanner = DocumentScanner(options: options);
+      final result = await scanner.scanDocument();
+
+      if (result.images != null && result.images!.isNotEmpty) {
+        final imagePath = result.images!.first;
+        // Save to public gallery
+        await Gal.putImage(imagePath, album: 'ProspektScanner');
+        
+        state = state.copyWith(
+          status: IngestionStatus.success,
+        );
+        _ref.read(notificationServiceProvider).showSuccess('Foto in Galerie gespeichert!');
+      } else {
+        state = state.copyWith(status: IngestionStatus.idle);
+      }
+      scanner.close();
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
   Future<void> loadAndProcessAsset(String assetPath) async {
     state = state.copyWith(status: IngestionStatus.loading);
 
@@ -88,8 +117,6 @@ class IngestionController extends StateNotifier<IngestionState> {
 
     final parser = _ref.read(brochureParserProvider);
     final offers = await parser.parse(file, 0);
-
-    debugPrint('INGESTION_DEBUG: Controller received ${offers.length} offers.');
 
     state = state.copyWith(
       status: IngestionStatus.success,

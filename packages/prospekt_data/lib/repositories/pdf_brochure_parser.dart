@@ -10,7 +10,6 @@ class PdfBrochureParser implements BrochureParser {
 
   @override
   Future<List<Offer>> parse(File file, int brochureId) async {
-    print('DEBUG: Executing PdfBrochureParser V3 (with aggressive blacklist)');
     try {
       final String? text = await _channel.invokeMethod<String>('extractText', {
         'filePath': file.path,

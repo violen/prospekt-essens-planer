@@ -24,6 +24,8 @@ dependencies:
   tutorial_coach_mark: ^1.2.9
   shared_preferences: ^2.2.3
   google_mlkit_document_scanner: ^0.4.1
+  gal: ^2.1.0
+  path_provider: ^2.1.5
 
   meta: ^1.17.0
 

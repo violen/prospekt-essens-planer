@@ -222,6 +222,17 @@ class BrochureIngestionPage extends ConsumerWidget {
       builder: (context) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const ListTile(title: Text('Debug Tools', style: TextStyle(fontWeight: FontWeight.bold))),
+          ListTile(
+            leading: const Icon(Icons.save_alt),
+            title: const Text('Scan & Save to Gallery'),
+            subtitle: const Text('Speichert das Foto im Pictures Ordner'),
+            onTap: () {
+              controller.scanAndSaveToGallery();
+              Navigator.pop(context);
+            },
+          ),
+          const Divider(),
           const ListTile(title: Text('Test Samples (Real PDF)', style: TextStyle(fontWeight: FontWeight.bold))),
           ListTile(
             leading: const Icon(Icons.picture_as_pdf),
