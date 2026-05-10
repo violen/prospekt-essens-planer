@@ -1,0 +1,15 @@
+appId: com.violen.prospekt_essens_planer.prospekt_essens_planer
+---
+- launchApp
+- runFlow:
+    when:
+        visible: "ÜBERSPRINGEN"
+    commands:
+        - tapOn: "ÜBERSPRINGEN"
+- tapOn: "Import.*"
+- tapOn: "Test Samples verarbeiten"
+- tapOn: "Netto Prospekt"
+- extendedWaitUntil:
+    visible: ".*Angebote erkannt."
+    timeout: 60000
+- takeScreenshot: "maestro/screenshots/netto_sample_results_v3"

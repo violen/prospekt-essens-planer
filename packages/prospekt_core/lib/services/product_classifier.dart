@@ -66,7 +66,7 @@ class ProductClassifier {
     }
     
     // Common food keywords that are almost always valid
-    const foodKeywords = ['fleisch', 'wurst', 'käse', 'apfel', 'tomate', 'brot', 'milch', 'kartoffel', 'nudel', 'gemüse', 'obst', 'gurke', 'erdbeere', 'steak', 'joghurt', 'ei'];
+    const foodKeywords = ['fleisch', 'wurst', 'käse', 'apfel', 'tomate', 'brot', 'milch', 'kartoffel', 'nudel', 'gemüse', 'obst', 'gurke', 'erdbeere', 'steak', 'joghurt', 'ei', 'ingwer', 'lachs', 'hähnchen', 'pute'];
     if (foodKeywords.any((k) => name.contains(k))) {
       return true;
     }

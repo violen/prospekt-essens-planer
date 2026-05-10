@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,14 @@ class BrochureIngestionPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.importBrochure),
+        actions: [
+          if (kDebugMode)
+            IconButton(
+              icon: const Icon(Icons.bug_report),
+              onPressed: () => _showDebugSamplePicker(context, controller),
+              tooltip: 'Test Samples verarbeiten',
+            ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -202,6 +211,46 @@ class BrochureIngestionPage extends ConsumerWidget {
             },
             child: Text(l10n.save),
           ),
+        ],
+      ),
+    );
+  }
+
+  void _showDebugSamplePicker(BuildContext context, IngestionController controller) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const ListTile(title: Text('Debug Tools', style: TextStyle(fontWeight: FontWeight.bold))),
+          ListTile(
+            leading: const Icon(Icons.save_alt),
+            title: const Text('Scan & Save to Gallery'),
+            subtitle: const Text('Speichert das Foto im Pictures Ordner'),
+            onTap: () {
+              controller.scanAndSaveToGallery();
+              Navigator.pop(context);
+            },
+          ),
+          const Divider(),
+          const ListTile(title: Text('Test Samples (Real PDF)', style: TextStyle(fontWeight: FontWeight.bold))),
+          ListTile(
+            leading: const Icon(Icons.picture_as_pdf),
+            title: const Text('Kaufland Prospekt'),
+            onTap: () {
+              controller.loadAndProcessAsset('assets/test_samples/Kaufland-Prospekt-30-04-2026-06-05-2026-00.pdf');
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.picture_as_pdf),
+            title: const Text('Netto Prospekt'),
+            onTap: () {
+              controller.loadAndProcessAsset('assets/test_samples/Netto-hz18_gasb_3.pdf');
+              Navigator.pop(context);
+            },
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );
